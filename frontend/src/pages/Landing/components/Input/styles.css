@@ -1,0 +1,46 @@
+/* Label animation */
+/* https://github.com/animate-css/animate.css/tree/main/source */
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.input-old-wrapper {
+  position: relative;
+  width: 100%;
+}
+.input-old-wrapper .label {
+  display: none;
+  font-size: var(--font-size-xs);
+  color: var(--muted-col);
+  position: absolute;
+  top: 2px;
+  left: 8px;
+  animation: slideInUp;
+  animation-duration: 0.15s;
+}
+.input-old-wrapper.has-value .label {
+  display: block;
+}
+.input-old-wrapper.has-value .input-old {
+  padding: 15px 10px 5px 10px;
+}
+
+.input-old {
+  width: 100%;
+  background-color: var(--gray-light-col);
+  padding: 10px;
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--gray-col);
+  outline: none;
+  border-radius: 3px;
+}
+.input-old:focus {
+  border-color: var(--gray-dark-col);
+}

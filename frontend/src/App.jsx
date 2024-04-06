@@ -6,7 +6,8 @@ import "./styles/main.css";
 import "./styles/colors.css";
 import "./styles/utilities.css";
 import "./styles/buttons.css";
-import "./styles/inputs.css"
+import "./styles/inputs.css";
+import "./styles/animations.css";
 
 // Pages
 import Landing from "./pages/Landing";

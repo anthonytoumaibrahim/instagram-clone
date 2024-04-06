@@ -3,10 +3,12 @@
   --primary-col: #0095f6;
   --primary-light-col: #4db5f9;
   --primary-lighter-col: #99d5fb;
-  
+
   --gray-dark-col: #a8a8a8;
   --gray-col: #dbdbdb;
   --gray-light-col: #fafafa;
+
+  --muted-col: #888888;
 
   --error-col: #dc2626;
   --error-light-col: #fee2e2;
@@ -14,6 +16,7 @@
   --success-col: #059669;
   --success-light-col: #d1fae5;
 
+  --font-size-xs: 0.685rem;
   --font-size-sm: 0.845rem;
   --font-size-base: 0.945rem;
   --font-size-lg: 1.125rem;
@@ -37,11 +40,13 @@
   font-size: var(--font-size-base);
 }
 
-a, .link {
+a,
+.link {
   color: var(--primary-col);
   text-decoration: none;
 }
-a:active, .link:active {
+a:active,
+.link:active {
   color: var(--primary-light-col);
 }
 
@@ -58,7 +63,6 @@ a:active, .link:active {
 @media (max-width: 1024px) {
   .container {
     max-width: 1024px;
-    
   }
 }
 

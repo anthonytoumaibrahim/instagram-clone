@@ -1,5 +1,6 @@
 // Components
 import Authentication from "./components/Authentication";
+import Footer from "./components/Footer";
 
 // Styles
 import "./styles.css";
@@ -31,6 +32,8 @@ const Landing = () => {
 
         <Authentication />
       </main>
+
+      <Footer />
     </>
   );
 };

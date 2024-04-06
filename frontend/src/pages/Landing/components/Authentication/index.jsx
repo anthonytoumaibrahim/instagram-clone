@@ -3,6 +3,7 @@ import { useState } from "react";
 
 // Components
 import Logo from "../../../../components/Logo";
+import Input from "../Input";
 
 // Styles
 import "./styles.css";
@@ -13,25 +14,35 @@ import microsoft from "../../../../assets/landing/microsoft.png";
 
 const Authentication = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [authInfo, setAuthInfo] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleAuthInputChange = (type, value) => {
+    setAuthInfo({
+      ...authInfo,
+      [type]: value,
+    });
+  };
   return (
     <div className="authentication-container">
       <div className="authentication-card">
         <Logo />
 
         <form action="" className="authentication-form">
-          <input
-            type="text"
-            className="input-old"
-            placeholder="Phone number, username or email"
+          <Input
+            placeholder="Phone number, email or username"
+            value={authInfo.username}
+            handleChange={(value) => handleAuthInputChange("username", value)}
           />
-          <input
+          <Input
             type="password"
-            className="input-old"
             placeholder="Password"
+            value={authInfo.password}
+            handleChange={(value) => handleAuthInputChange("password", value)}
           />
-          <button className="button button-primary">
-            Log in
-          </button>
+          <button className="button button-primary">Log in</button>
         </form>
       </div>
       <div className="authentication-card">
