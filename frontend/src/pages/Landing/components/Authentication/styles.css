@@ -19,14 +19,16 @@
   flex-direction: column;
   gap: 6px;
   width: 100%;
+  margin-bottom: 6px;
+}
+
+.authentication-form .response-message {
+  text-align: center;
+  margin: 20px 0;
 }
 
 .authentication-card .logo {
   margin-top: 20px;
-}
-
-.authentication-form .button {
-  margin-top: 6px;
 }
 
 .phone-apps-container {

@@ -1,5 +1,9 @@
 // React stuff
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+// Core
+import { sendRequest } from "../../../../core/tools/remote/request";
 
 // Components
 import Logo from "../../../../components/Logo";
@@ -13,12 +17,17 @@ import google_play from "../../../../assets/landing/google-play.png";
 import microsoft from "../../../../assets/landing/microsoft.png";
 
 const Authentication = () => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [authInfo, setAuthInfo] = useState({
     emailOrPhone: "",
     fullName: "",
     username: "",
     password: "",
+  });
+  const [error, setError] = useState({
+    message: "",
+    errors: {},
   });
 
   const btnRef = useRef(null);
@@ -43,6 +52,31 @@ const Authentication = () => {
     btnRef.current.disabled = true;
   };
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const requestPath = isLogin ? "login" : "register";
+    const request = sendRequest(
+      "POST",
+      `/auth/${requestPath}`,
+      {
+        username: authInfo.username,
+        password: authInfo.password,
+      },
+      navigate
+    ).catch((error) => {
+      const { message, errors } = error.response.data;
+      if (message && errors) {
+        return setError({
+          message: message,
+        });
+      }
+      setError({
+        message: "Sorry, something went wrong!",
+        errors: {},
+      });
+    });
+  };
+
   useEffect(() => {
     handleButtonState();
   }, [authInfo]);
@@ -51,7 +85,11 @@ const Authentication = () => {
       <div className="authentication-card">
         <Logo />
 
-        <form action="" className="authentication-form">
+        <form
+          action=""
+          className="authentication-form"
+          onSubmit={handleFormSubmit}
+        >
           {isLogin ? (
             <Input
               placeholder="Phone number, email or username"
@@ -119,6 +157,9 @@ const Authentication = () => {
           <button className="button button-primary" ref={btnRef}>
             {isLogin ? "Log in" : "Sign up"}
           </button>
+          {error.message !== "" && (
+            <p className="text-error response-message">{error.message}</p>
+          )}
         </form>
       </div>
       <div className="authentication-card">

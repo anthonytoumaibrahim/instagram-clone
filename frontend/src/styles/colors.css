@@ -1,4 +1,3 @@
-
 .text-error {
-  color: var(--primary-col);
+  color: var(--error-col);
 }
