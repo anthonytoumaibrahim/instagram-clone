@@ -6,30 +6,54 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
+        $validator = Validator::make($request->all(), [
+            'username' => 'required',
+            'password' => 'required'
+        ], [
+            'username.required' => 'Please enter your email address, username or mobile number.',
+            'password.required' => 'Please enter your password.'
         ]);
-        $credentials = $request->only('email', 'password');
 
-        $token = Auth::attempt($credentials);
+        $errors = $validator->errors();
+
+        foreach ($errors->all() as $message) {
+            return response()->json([
+                'success' => false,
+                'message' => $message,
+            ], 422);
+        }
+
+        if (filter_var($request->username, FILTER_VALIDATE_EMAIL)) {
+            $token = Auth::attempt([
+                'email' => $request->username,
+                'password' => $request->password
+            ]);
+        } else {
+            $token = Auth::attempt([
+                'username' => $request->username,
+                'password' => $request->password
+            ]);
+        }
+
+
         if (!$token) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized',
-            ], 401);
+                'success' => false,
+                'message' => 'Sorry, your password is wrong.',
+            ], 422);
         }
 
         $user = Auth::user();
         return response()->json([
             'status' => 'success',
             'user' => $user,
-            'authorisation' => [
+            'authorization' => [
                 'token' => $token,
                 'type' => 'bearer',
             ]
@@ -38,24 +62,57 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
+        $validator = Validator::make($request->all(), [
+            'emailOrPhone' => 'required|unique:users,email|unique:users,phone',
+            'fullName' => 'required',
+            'username' => 'required|min:6|max:20|unique:users,username',
+            'password' => 'required|min:8'
+        ], [
+            'emailOrPhone.required' => 'Please enter an email address or mobile number.',
+            'username.required' => 'Please enter a username, between 6 and 20 characters.',
+            'username.unique' => 'This username is already taken. Please try another.',
+            'password.required' => 'Please enter your password.',
+            'password.min' => 'Please make sure your password is at least 8 characters long.'
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $errors = $validator->errors();
+
+        foreach ($errors->all() as $message) {
+            return response()->json([
+                'success' => false,
+                'message' => $message,
+            ], 422);
+        }
+
+        // Validate if email or phone nb
+        // https://ihateregex.io/expr/phone/
+        $validatePhone = preg_match('/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{2,6}$/', $request->emailOrPhone);
+        $validateEmail = filter_var($request->emailOrPhone, FILTER_VALIDATE_EMAIL);
+
+        if (!$validateEmail && !$validatePhone) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please enter a valid email address or phone number.',
+            ], 422);
+        }
+
+        $user = new User();
+        $user->username = $request->username;
+        $user->password = Hash::make($request->password);
+        $user->full_name = $request->fullName;
+        if ($validateEmail) {
+            $user->email = $request->emailOrPhone;
+        } else {
+            $user->phone = $request->emailOrPhone;
+        }
+        $user->saveOrFail();
 
         $token = Auth::login($user);
         return response()->json([
-            'status' => 'success',
-            'message' => 'User created successfully',
+            'success' => true,
+            'message' => 'Account created successfully.',
             'user' => $user,
-            'authorisation' => [
+            'authorization' => [
                 'token' => $token,
                 'type' => 'bearer',
             ]
@@ -66,7 +123,7 @@ class AuthController extends Controller
     {
         Auth::logout();
         return response()->json([
-            'status' => 'success',
+            'success' => true,
             'message' => 'Successfully logged out',
         ]);
     }
@@ -74,9 +131,9 @@ class AuthController extends Controller
     public function refresh()
     {
         return response()->json([
-            'status' => 'success',
+            'success' => true,
             'user' => Auth::user(),
-            'authorisation' => [
+            'authorization' => [
                 'token' => Auth::refresh(),
                 'type' => 'bearer',
             ]
