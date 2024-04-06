@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: center;
   gap: 40px;
+  padding-top: 20px;
 }
 
 .landing-layout {

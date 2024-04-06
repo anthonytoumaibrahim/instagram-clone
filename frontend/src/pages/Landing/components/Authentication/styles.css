@@ -22,6 +22,10 @@
   margin-bottom: 6px;
 }
 
+.authentication-form .loader-spinning {
+  margin: auto;
+}
+
 .authentication-form .response-message {
   text-align: center;
   margin: 20px 0;

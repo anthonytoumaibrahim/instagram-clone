@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { sendRequest } from "../../../../core/tools/remote/request";
 
 // Components
+import Loader from "../../../../components/Loader";
 import Logo from "../../../../components/Logo";
 import Input from "../Input";
 
@@ -18,6 +19,7 @@ import microsoft from "../../../../assets/landing/microsoft.png";
 
 const Authentication = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [authInfo, setAuthInfo] = useState({
     emailOrPhone: "",
@@ -25,10 +27,7 @@ const Authentication = () => {
     username: "",
     password: "",
   });
-  const [error, setError] = useState({
-    message: "",
-    errors: {},
-  });
+  const [error, setError] = useState("");
 
   const btnRef = useRef(null);
 
@@ -54,6 +53,8 @@ const Authentication = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    btnRef.current.disabled = true;
     const requestPath = isLogin ? "login" : "register";
     const request = sendRequest(
       "POST",
@@ -63,23 +64,24 @@ const Authentication = () => {
         password: authInfo.password,
       },
       navigate
-    ).catch((error) => {
-      const { message, errors } = error.response.data;
-      if (message && errors) {
-        return setError({
-          message: message,
-        });
-      }
-      setError({
-        message: "Sorry, something went wrong!",
-        errors: {},
+    )
+      .catch((error) => {
+        const { message } = error.response.data;
+        if (message) {
+          return setError(message);
+        }
+        setError("Sorry, something went wrong!");
+      })
+      .finally(() => {
+        btnRef.current.disabled = false;
+        setIsLoading(false);
       });
-    });
   };
 
   useEffect(() => {
     handleButtonState();
   }, [authInfo]);
+
   return (
     <div className="authentication-container">
       <div className="authentication-card">
@@ -155,10 +157,10 @@ const Authentication = () => {
             </div>
           )}
           <button className="button button-primary" ref={btnRef}>
-            {isLogin ? "Log in" : "Sign up"}
+            {isLoading ? <Loader width={19} /> : isLogin ? "Log in" : "Sign up"}
           </button>
-          {error.message !== "" && (
-            <p className="text-error response-message">{error.message}</p>
+          {error !== "" && (
+            <p className="text-error response-message">{error}</p>
           )}
         </form>
       </div>
