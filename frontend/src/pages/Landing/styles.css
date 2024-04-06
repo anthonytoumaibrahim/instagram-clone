@@ -14,18 +14,3 @@
   max-width: 840px;
   height: 100%;
 }
-
-.landing-layout .phones-container {
-  width: 382px;
-  height: 596px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-}
-
-.landing-layout .phones-container .screenshot {
-  position: absolute;
-  top: 26px;
-  right: 27px;
-  height: 511px;
-}

@@ -1,5 +1,5 @@
 // React stuff
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 // Components
 import Logo from "../../../../components/Logo";
@@ -19,12 +19,26 @@ const Authentication = () => {
     password: "",
   });
 
+  const btnRef = useRef(null);
+
   const handleAuthInputChange = (type, value) => {
     setAuthInfo({
       ...authInfo,
       [type]: value,
     });
   };
+
+  const handleButtonState = () => {
+    if (authInfo.username !== "" && authInfo.password.length >= 8) {
+      btnRef.current.disabled = false;
+      return;
+    }
+    btnRef.current.disabled = true;
+  };
+
+  useEffect(() => {
+    handleButtonState();
+  }, [authInfo]);
   return (
     <div className="authentication-container">
       <div className="authentication-card">
@@ -42,7 +56,9 @@ const Authentication = () => {
             value={authInfo.password}
             handleChange={(value) => handleAuthInputChange("password", value)}
           />
-          <button className="button button-primary">Log in</button>
+          <button className="button button-primary" ref={btnRef}>
+            Log in
+          </button>
         </form>
       </div>
       <div className="authentication-card">
