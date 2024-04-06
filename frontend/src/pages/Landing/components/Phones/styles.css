@@ -41,3 +41,10 @@
 .landing-layout .phones-container .screenshot.fadeOut {
   animation-name: fadeOut;
 }
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .landing-layout .phones-container {
+    display: none;
+  }
+}

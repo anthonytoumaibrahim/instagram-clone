@@ -54,7 +54,30 @@
   justify-content: center;
   gap: 20px;
 }
-.tos-info p, .tos-info a {
+.tos-info p,
+.tos-info a {
   font-size: var(--font-size-xs);
   text-align: center;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .landing-layout .authentication-container {
+    width: 350px;
+    margin: auto;
+  }
+}
+@media (max-width: 480px) {
+  .landing-layout .authentication-container {
+    width: auto;
+    margin: auto;
+  }
+  .authentication-card {
+    border: none;
+    padding: 0;
+  }
+  .phone-apps {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 }

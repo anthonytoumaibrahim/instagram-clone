@@ -3,7 +3,7 @@ import "./styles.css";
 
 const Footer = () => {
   return (
-    <footer className="landing-footer">
+    <footer className="landing-footer container">
       <nav className="footer-nav">
         <a href="#!">Meta</a>
         <a href="#!">About</a>
@@ -20,11 +20,11 @@ const Footer = () => {
         <a href="#!">Meta Verified</a>
       </nav>
       <div className="copyright">
-        <select>
-          <option selected>English</option>
-          <option>Arabic</option>
-          <option>French</option>
-          <option>Spanish</option>
+        <select defaultValue="en">
+          <option value="en">English</option>
+          <option value="ar">Arabic</option>
+          <option value="fr">French</option>
+          <option value="es">Spanish</option>
         </select>
         <p>&copy; 2024 Instagram from Meta</p>
       </div>
