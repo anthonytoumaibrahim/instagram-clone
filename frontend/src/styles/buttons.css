@@ -1,0 +1,20 @@
+.unstyled-button,
+.button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.button {
+  font-weight: 700;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.button-primary {
+  background-color: var(--primary-col);
+  color: #ffffff;
+}
+.button-primary:hover {
+  background-color: var(--primary-dark-col);
+}

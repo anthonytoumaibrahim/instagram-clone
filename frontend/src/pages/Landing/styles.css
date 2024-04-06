@@ -1,0 +1,28 @@
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: center;
+}
+
+.landing-layout .phones-container {
+  width: 382px;
+  height: 596px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.landing-layout .phones-container .screenshot {
+  position: absolute;
+  top: 26px;
+  right: 27px;
+  height: 511px;
+}

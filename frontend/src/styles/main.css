@@ -1,0 +1,69 @@
+:root {
+  --primary-dark-col: #0077c5;
+  --primary-col: #0095f6;
+  --primary-light-col: #4db5f9;
+  --primary-lighter-col: #99d5fb;
+  
+  --gray-dark-col: #a8a8a8;
+  --gray-col: #dbdbdb;
+  --gray-light-col: #fafafa;
+
+  --error-col: #dc2626;
+  --error-light-col: #fee2e2;
+
+  --success-col: #059669;
+  --success-light-col: #d1fae5;
+
+  --font-size-sm: 0.845rem;
+  --font-size-base: 0.945rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2rem;
+  --font-size-5xl: 2.5rem;
+
+  --line-height-xl: 2.25rem;
+  --line-height-lg: 1.75rem;
+  --line-height-base: 1.5rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: var(--font-size-base);
+}
+
+a, .link {
+  color: var(--primary-col);
+  text-decoration: none;
+}
+a:active, .link:active {
+  color: var(--primary-light-col);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 26px;
+  padding-right: 26px;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 1024px;
+    
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}

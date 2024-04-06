@@ -1,0 +1,46 @@
+.authentication-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.authentication-container .authentication-card {
+  border: 1px solid var(--gray-col);
+  padding: 30px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.authentication-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.authentication-card .logo {
+  margin-top: 20px;
+}
+
+.authentication-form .button {
+  margin-top: 6px;
+}
+
+.phone-apps-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.phone-apps {
+  display: flex;
+  justify-content: space-around;
+}
+.phone-apps img {
+  width: 136px;
+  height: 42px;
+  object-fit: contain;
+}

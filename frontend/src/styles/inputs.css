@@ -1,0 +1,11 @@
+.input-old {
+  background-color: var(--gray-light-col);
+  padding: 8px;
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--gray-col);
+  outline: none;
+  border-radius: 3px;
+}
+.input-old:focus {
+  border-color: var(--gray-dark-col);
+}
