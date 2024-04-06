@@ -25,9 +25,19 @@ const Phones = () => {
         currentIndex += 1;
       }
       screenshotRef.current.src = images[currentIndex];
-    }, 5000);
+      // screenshotRef.current.classList.remove("fadeIn");
+      // screenshotRef.current.classList.remove("fadeOut");
+      // setTimeout(() => {
+      //   screenshotRef.current.classList.add("fadeIn");
+      // }, currentIndex * 3000);
+      // setTimeout(() => {
+      //   screenshotRef.current.classList.add("fadeOut");
+      // }, 3000);
+    }, 3000);
+
     return () => clearInterval(screenshotInterval);
   }, []);
+
   return (
     <div
       className="phones-container"

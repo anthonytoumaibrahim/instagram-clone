@@ -1,3 +1,28 @@
 .landing-footer {
   margin-top: auto;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.landing-footer .footer-nav {
+  display: flex;
+  gap: 20px;
+}
+.landing-footer a,
+.landing-footer p,
+.landing-footer select {
+  font-size: var(--font-size-sm);
+  color: var(--muted-col);
+}
+.landing-footer .copyright {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.landing-footer select {
+  border: none;
+  outline: none;
 }

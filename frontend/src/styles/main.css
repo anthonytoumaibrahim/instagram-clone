@@ -1,4 +1,5 @@
 :root {
+  --primary-darker-col: #005994;
   --primary-dark-col: #0077c5;
   --primary-col: #0095f6;
   --primary-light-col: #4db5f9;
@@ -17,7 +18,7 @@
   --success-light-col: #d1fae5;
 
   --font-size-xs: 0.685rem;
-  --font-size-sm: 0.845rem;
+  --font-size-sm: 0.805rem;
   --font-size-base: 0.945rem;
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.25rem;
@@ -44,6 +45,9 @@ a,
 .link {
   color: var(--primary-col);
   text-decoration: none;
+}
+.link.link-dark {
+  color: var(--primary-darker-col);
 }
 a:active,
 .link:active {

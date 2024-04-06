@@ -15,6 +15,8 @@ import microsoft from "../../../../assets/landing/microsoft.png";
 const Authentication = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [authInfo, setAuthInfo] = useState({
+    emailOrPhone: "",
+    fullName: "",
     username: "",
     password: "",
   });
@@ -29,10 +31,15 @@ const Authentication = () => {
   };
 
   const handleButtonState = () => {
+    if (!isLogin) {
+      if (authInfo) {
+      }
+    }
     if (authInfo.username !== "" && authInfo.password.length >= 8) {
       btnRef.current.disabled = false;
       return;
     }
+
     btnRef.current.disabled = true;
   };
 
@@ -45,19 +52,72 @@ const Authentication = () => {
         <Logo />
 
         <form action="" className="authentication-form">
-          <Input
-            placeholder="Phone number, email or username"
-            value={authInfo.username}
-            handleChange={(value) => handleAuthInputChange("username", value)}
-          />
+          {isLogin ? (
+            <Input
+              placeholder="Phone number, email or username"
+              value={authInfo.username}
+              handleChange={(value) => handleAuthInputChange("username", value)}
+            />
+          ) : (
+            <>
+              <Input
+                placeholder="Mobile Number or Email"
+                value={authInfo.emailOrPhone}
+                handleChange={(value) =>
+                  handleAuthInputChange("emailOrPhone", value)
+                }
+              />
+              <Input
+                placeholder="Full Name"
+                value={authInfo.fullName}
+                handleChange={(value) =>
+                  handleAuthInputChange("fullName", value)
+                }
+              />
+              <Input
+                placeholder="Username"
+                value={authInfo.username}
+                handleChange={(value) =>
+                  handleAuthInputChange("username", value)
+                }
+              />
+            </>
+          )}
+
           <Input
             type="password"
             placeholder="Password"
             value={authInfo.password}
             handleChange={(value) => handleAuthInputChange("password", value)}
           />
+          {!isLogin && (
+            <div className="tos-info">
+              <p>
+                People who use our service may have uploaded your contact
+                information to Instagram.{" "}
+                <a href="#!" className="link link-dark" target="_blank">
+                  Learn More
+                </a>
+              </p>
+              <p>
+                By signing up, you agree to our{" "}
+                <a href="#!" className="link link-dark" target="_blank">
+                  Terms
+                </a>
+                ,{" "}
+                <a href="#!" className="link link-dark" target="_blank">
+                  Privacy Policy
+                </a>{" "}
+                and{" "}
+                <a href="#!" className="link link-dark" target="_blank">
+                  Cookies Policy
+                </a>
+                .
+              </p>
+            </div>
+          )}
           <button className="button button-primary" ref={btnRef}>
-            Log in
+            {isLogin ? "Log in" : "Sign up"}
           </button>
         </form>
       </div>
