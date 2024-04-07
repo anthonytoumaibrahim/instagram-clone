@@ -22,6 +22,7 @@ import microsoft from "../../../../assets/landing/microsoft.png";
 
 const Authentication = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [authInfo, setAuthInfo] = useState({
@@ -42,33 +43,57 @@ const Authentication = () => {
   };
 
   const handleButtonState = () => {
-    if (!isLogin) {
-      if (authInfo) {
-      }
-    }
-    if (authInfo.username !== "" && authInfo.password.length >= 8) {
+    btnRef.current.disabled = true;
+
+    if (
+      !isLogin &&
+      authInfo.fullName !== "" &&
+      authInfo.emailOrPhone !== "" &&
+      authInfo.username !== "" &&
+      authInfo.password.length >= 8
+    ) {
       btnRef.current.disabled = false;
-      return;
     }
 
-    btnRef.current.disabled = true;
+    if (isLogin && authInfo.username !== "" && authInfo.password.length >= 8) {
+      btnRef.current.disabled = false;
+    }
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
     btnRef.current.disabled = true;
+
     const requestPath = isLogin ? "login" : "register";
-    const request = sendRequest(
+    sendRequest(
       "POST",
       `/auth/${requestPath}`,
       {
+        emailOrPhone: authInfo.emailOrPhone,
+        fullName: authInfo.fullName,
         username: authInfo.username,
         password: authInfo.password,
       },
       navigate
     )
+      .then((response) => {
+        btnRef.current.disabled = false;
+        const { success, message, user, authorization } = response.data;
+        if (success) {
+          dispatch({
+            type: "userSlice/addUser",
+            payload: {
+              token: authorization.token,
+              avatar: user.avatar,
+            },
+          });
+          return navigate("/");
+        }
+        setError(message);
+      })
       .catch((error) => {
+        btnRef.current.disabled = false;
         const { message } = error.response.data;
         if (message) {
           return setError(message);
@@ -76,14 +101,13 @@ const Authentication = () => {
         setError("Sorry, something went wrong!");
       })
       .finally(() => {
-        btnRef.current.disabled = false;
         setIsLoading(false);
       });
   };
 
   useEffect(() => {
     handleButtonState();
-  }, [authInfo]);
+  }, [authInfo, isLogin]);
 
   return (
     <div className="authentication-container">

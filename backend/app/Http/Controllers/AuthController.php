@@ -29,9 +29,17 @@ class AuthController extends Controller
             ], 422);
         }
 
-        if (filter_var($request->username, FILTER_VALIDATE_EMAIL)) {
+        $validatePhone = preg_match('/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{2,6}$/', $request->username);
+        $validateEmail = filter_var($request->username, FILTER_VALIDATE_EMAIL);
+
+        if ($validateEmail) {
             $token = Auth::attempt([
                 'email' => $request->username,
+                'password' => $request->password
+            ]);
+        } else if ($validatePhone) {
+            $token = Auth::attempt([
+                'phone' => $request->username,
                 'password' => $request->password
             ]);
         } else {
@@ -51,11 +59,11 @@ class AuthController extends Controller
 
         $user = Auth::user();
         return response()->json([
-            'status' => 'success',
+            'success' => true,
             'user' => $user,
             'authorization' => [
                 'token' => $token,
-                'type' => 'bearer',
+                'type' => 'Bearer',
             ]
         ]);
     }
@@ -114,7 +122,7 @@ class AuthController extends Controller
             'user' => $user,
             'authorization' => [
                 'token' => $token,
-                'type' => 'bearer',
+                'type' => 'Bearer',
             ]
         ]);
     }

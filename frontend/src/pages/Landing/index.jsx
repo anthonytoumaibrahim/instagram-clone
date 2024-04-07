@@ -9,15 +9,15 @@ import "./styles.css";
 const Landing = () => {
 
   return (
-    <>
-      <main className="landing-layout container">
+    <main className="landing-page">
+      <section className="landing-layout container">
         <Phones />
 
         <Authentication />
-      </main>
+      </section>
 
       <Footer />
-    </>
+    </main>
   );
 };
 

@@ -10,8 +10,7 @@ import "./styles/inputs.css";
 import "./styles/animations.css";
 
 // Redux
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import { useSelector } from "react-redux";
 
 // Protected Route
 import ProtectedRoute from "./core/routes/ProtectedRoute";
@@ -20,18 +19,14 @@ import ProtectedRoute from "./core/routes/ProtectedRoute";
 import Landing from "./pages/Landing";
 
 const App = () => {
+  const tokenSelector = useSelector((state) => state.userSlice.token);
+
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route
-            path="/hello"
-            element={<ProtectedRoute>Hello</ProtectedRoute>}
-          />
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={tokenSelector ? <>hello</> : <Landing />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

@@ -17,8 +17,9 @@ export const userSlice = createSlice({
   name: "userSlice",
   reducers: {
     addUser: (state, action) => {
-      state.token = action.payload.token;
-      state.avatar = action.payload.avatar;
+      const { token, avatar } = action.payload;
+      state.token = token;
+      state.avatar = avatar;
       setLocalUser(state);
     },
     removeUser: (state, action) => {
