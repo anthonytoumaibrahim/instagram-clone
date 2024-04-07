@@ -21,7 +21,7 @@ export const sendRequest = async (
     return response;
   } catch (error) {
     if (error.response.status === 401) {
-      navigate("/lol");
+      navigate("/");
     }
 
     throw error;

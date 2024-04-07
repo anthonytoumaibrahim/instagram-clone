@@ -15,6 +15,9 @@ import { useSelector } from "react-redux";
 // Protected Route
 import ProtectedRoute from "./core/routes/ProtectedRoute";
 
+// Layouts
+import UserLayout from "./pages/layouts/UserLayout";
+
 // Pages
 import Landing from "./pages/Landing";
 
@@ -24,7 +27,13 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={tokenSelector ? <>hello</> : <Landing />} />
+        {tokenSelector ? (
+          <Route path="/" element={<UserLayout />}>
+            <Route index element={<>hello</>} />
+          </Route>
+        ) : (
+          <Route path="/" element={<Landing />} />
+        )}
       </Routes>
     </BrowserRouter>
   );

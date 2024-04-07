@@ -19,6 +19,9 @@
   font-size: var(--font-size-sm);
   color: var(--muted-col);
 }
+.landing-footer a:hover {
+  text-decoration: underline;
+}
 .landing-footer .copyright {
   display: flex;
   gap: 20px;
