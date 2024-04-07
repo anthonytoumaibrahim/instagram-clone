@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone')->unique()->nullable();
             $table->string('avatar')->nullable();
+            $table->string('bio', 150)->nullable();
+            $table->string('website')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
