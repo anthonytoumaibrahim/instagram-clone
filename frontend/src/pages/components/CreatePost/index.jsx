@@ -1,4 +1,6 @@
 import { useRef, useState } from "react";
+import { useRequest } from "../../../core/hooks/useRequest";
+import { toast } from "react-toastify";
 
 // Styles
 import "./styles.css";
@@ -10,10 +12,43 @@ import { GoArrowLeft } from "react-icons/go";
 import Avatar from "../../../components/Avatar";
 
 const CreatePost = ({ handleClose = () => {} }) => {
-  const [stage, setStage] = useState("caption");
+  const sendRequest = useRequest();
+  const [stage, setStage] = useState("upload");
   const inputRef = useRef(null);
+  const btnRef = useRef(null);
 
   const [files, setFiles] = useState([]);
+  const [previewData, setPreviewData] = useState(null);
+
+  const [caption, setCaption] = useState("");
+
+  const submitPost = () => {
+    btnRef.current.disabled = true;
+
+    const form = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      form.append(`images[${i}]`, files[i]);
+    }
+    form.append("caption", caption);
+
+    sendRequest("POST", "/create-post", form)
+      .then((response) => {
+        const { success, message } = response.data;
+        if (success) {
+          toast.success(message);
+          handleClose();
+        }
+      })
+      .catch((error) => {
+        const { message } = error?.response?.data;
+        toast.error(message ?? "Sorry, something went wrong.");
+      })
+      .finally(() => {
+        if (btnRef) {
+          btnRef.current.disabled = false;
+        }
+      });
+  };
 
   const handleFilesUpload = (files) => {
     setStage("caption");
@@ -33,6 +68,12 @@ const CreatePost = ({ handleClose = () => {} }) => {
     }
 
     setFiles(validatedFiles);
+
+    const reader = new FileReader();
+    reader.readAsDataURL(validatedFiles[0]);
+    reader.onload = (ev) => {
+      setPreviewData(ev.target.result);
+    };
   };
 
   return (
@@ -42,14 +83,23 @@ const CreatePost = ({ handleClose = () => {} }) => {
       <div className="body">
         <div className="title">
           {stage !== "upload" && (
-            <GoArrowLeft
-              size={32}
-              className="back-btn"
-              onClick={() => {
-                setStage("upload");
-                setFiles([]);
-              }}
-            />
+            <>
+              <GoArrowLeft
+                size={32}
+                className="back-btn"
+                onClick={() => {
+                  setStage("upload");
+                  setFiles([]);
+                }}
+              />
+              <button
+                className="post-btn button button-primary"
+                onClick={submitPost}
+                ref={btnRef}
+              >
+                Post
+              </button>
+            </>
           )}{" "}
           Create new post
         </div>
@@ -79,15 +129,17 @@ const CreatePost = ({ handleClose = () => {} }) => {
           {stage === "caption" && (
             <div className="caption-editor">
               <div className="uploaded-images">
-                <img
-                  src="https://i.ytimg.com/an_webp/0pT-dWpmwhA/mqdefault_6s.webp?du=3000&sqp=CLD4yrAG&rs=AOn4CLCcBJzJ7TLTzdkS1qqJM931lkVc8A"
-                  alt=""
-                  className="uploaded-image"
-                />
+                <img src={previewData} alt="" className="uploaded-image" />
               </div>
 
               <div className="options">
                 <Avatar size={28} username={true} />
+                <textarea
+                  className="post-caption-editor"
+                  placeholder="Write your caption here..."
+                  value={caption}
+                  onChange={(e) => setCaption(e.target.value)}
+                ></textarea>
               </div>
             </div>
           )}
