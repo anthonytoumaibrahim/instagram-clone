@@ -1,4 +1,5 @@
 // React stuff
+import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 
 // Redux
@@ -9,6 +10,7 @@ import Logo from "../../../components/Logo";
 
 // Components
 import Avatar from "../../../components/Avatar";
+import CreatePost from "../CreatePost";
 
 // Icons
 import {
@@ -25,69 +27,75 @@ import "./styles.css";
 
 const Sidebar = () => {
   const avatarSelector = useSelector((state) => state.userSlice.avatar);
+  const [postModal, showPostModal] = useState(false);
   return (
-    <aside className="sidebar">
-      <Logo size={120} />
+    <>
+      {postModal && (
+        <CreatePost handleClose={() => showPostModal(!postModal)} />
+      )}
+      <aside className="sidebar">
+        <Logo size={120} />
 
-      <nav className="sidebar-nav">
-        <NavLink
-          to="/"
-          className={({ isActive }) => (isActive ? "active" : "")}
-        >
-          {({ isActive, isPending, isTransitioning }) =>
-            isActive ? (
-              <>
-                <PiHouseFill size={22} className="nav-icon" />
-                Home
-              </>
-            ) : (
-              <>
-                <PiHouseBold size={22} className="nav-icon" />
-                Home
-              </>
-            )
-          }
-        </NavLink>
-        <Link to="/search">
-          <FiSearch size={22} className="nav-icon" />
-          Search
-        </Link>
-        <Link to="/explore">
-          <FaRegCompass size={22} className="nav-icon" />
-          Explore
-        </Link>
-        <Link to="/profile">
-          <FaRegSquarePlus size={22} className="nav-icon" />
-          Create
-        </Link>
-        <NavLink
-          to="/profile"
-          className={({ isActive }) => (isActive ? "active" : "")}
-        >
-          {({ isActive, isPending, isTransitioning }) =>
-            isActive ? (
-              <>
-                <Avatar
-                  size={22}
-                  avatar_url={avatarSelector}
-                  className="nav-icon avatar-active"
-                />
-                Profile
-              </>
-            ) : (
-              <>
-                <Avatar
-                  size={22}
-                  avatar_url={avatarSelector}
-                  className="nav-icon"
-                />
-                Profile
-              </>
-            )
-          }
-        </NavLink>
-      </nav>
-    </aside>
+        <nav className="sidebar-nav">
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            {({ isActive, isPending, isTransitioning }) =>
+              isActive ? (
+                <>
+                  <PiHouseFill size={22} className="nav-icon" />
+                  Home
+                </>
+              ) : (
+                <>
+                  <PiHouseBold size={22} className="nav-icon" />
+                  Home
+                </>
+              )
+            }
+          </NavLink>
+          <Link to="/search">
+            <FiSearch size={22} className="nav-icon" />
+            Search
+          </Link>
+          <Link to="/explore">
+            <FaRegCompass size={22} className="nav-icon" />
+            Explore
+          </Link>
+          <Link to="/" onClick={() => showPostModal(!postModal)}>
+            <FaRegSquarePlus size={22} className="nav-icon" />
+            Create
+          </Link>
+          <NavLink
+            to="/profile"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            {({ isActive, isPending, isTransitioning }) =>
+              isActive ? (
+                <>
+                  <Avatar
+                    size={22}
+                    avatar_url={avatarSelector}
+                    className="nav-icon avatar-active"
+                  />
+                  Profile
+                </>
+              ) : (
+                <>
+                  <Avatar
+                    size={22}
+                    avatar_url={avatarSelector}
+                    className="nav-icon"
+                  />
+                  Profile
+                </>
+              )
+            }
+          </NavLink>
+        </nav>
+      </aside>
+    </>
   );
 };
 
