@@ -57,6 +57,7 @@ const CreatePost = ({ handleClose = () => {} }) => {
       "image/png",
       "image/svg",
       "image/gif",
+      "image/webp",
     ];
     let validatedFiles = [];
     for (let i = 0; i < files.length; i++) {

@@ -1,0 +1,35 @@
+.profile-editor {
+  margin-top: 40px;
+}
+.profile-editor form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.profile-editor form .button {
+  margin-left: auto;
+}
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.input-wrapper label {
+  font-weight: 500;
+}
+.input-wrapper input,
+.input-wrapper textarea {
+  padding: 10px 20px;
+  border: 1px solid var(--gray-col);
+  border-radius: 10px;
+  outline: none;
+}
+.input-wrapper input:focus,
+.input-wrapper textarea:focus {
+  border-color: var(--primary-col);
+}
+
+.input-wrapper textarea {
+  min-height: 200px;
+}

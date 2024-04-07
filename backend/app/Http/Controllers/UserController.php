@@ -30,6 +30,31 @@ class UserController extends Controller
         ], 422);
     }
 
+    public function getProfileSettings()
+    {
+        $user = User::select('website', 'bio')->find(Auth::id());
+        return response()->json($user);
+    }
+
+    public function updateProfileSettings(Request $request)
+    {
+        $request->validate([
+            'bio' => 'max:150',
+            'website' => 'url|max:255'
+        ]);
+
+        $user = User::find(Auth::id());
+        $user->updateOrFail([
+            'website' => $request->website,
+            'bio' => $request->bio
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile updated successfully.'
+        ]);
+    }
+
     public function uploadAvatar(Request $request)
     {
         $request->validate([

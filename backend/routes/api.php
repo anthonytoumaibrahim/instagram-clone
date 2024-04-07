@@ -19,6 +19,8 @@ Route::middleware(['api', 'auth:api'])->group(function () {
     Route::controller(UserController::class)->group(function () {
         Route::get('/profile/{username?}', 'getProfile');
         Route::post('/upload-pfp', 'uploadAvatar');
+        Route::post('/update-settings', 'updateProfileSettings');
+        Route::get('/get-settings', 'getProfileSettings');
     });
 
     Route::controller(PostController::class)->group(function () {
