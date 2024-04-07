@@ -13,11 +13,14 @@ class UserController extends Controller
     public function getProfile($username = null)
     {
         $username = $username ?? Auth::user()->username;
-        $profile = User::where('username', $username)->with('posts')->first();
+        $user = User::where('username', $username)->with('posts.images')->first();
 
-        if ($profile) {
+        if ($user) {
             return response()->json([
-                'profile' => $profile
+                'profile' => $user,
+                'stats' => [
+                    'posts' => $user->posts()->count()
+                ]
             ]);
         }
 

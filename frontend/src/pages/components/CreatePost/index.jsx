@@ -51,7 +51,6 @@ const CreatePost = ({ handleClose = () => {} }) => {
   };
 
   const handleFilesUpload = (files) => {
-    setStage("caption");
     const acceptedTypes = [
       "image/jpeg",
       "image/jpg",
@@ -67,13 +66,18 @@ const CreatePost = ({ handleClose = () => {} }) => {
       }
     }
 
-    setFiles(validatedFiles);
+    if (validatedFiles.length !== 0) {
+      setFiles(validatedFiles);
 
-    const reader = new FileReader();
-    reader.readAsDataURL(validatedFiles[0]);
-    reader.onload = (ev) => {
-      setPreviewData(ev.target.result);
-    };
+      const reader = new FileReader();
+      reader.readAsDataURL(validatedFiles[0]);
+      reader.onload = (ev) => {
+        setPreviewData(ev.target.result);
+      };
+      setStage("caption");
+    } else {
+      toast.error("Some of the files you uploaded weren't images.");
+    }
   };
 
   return (

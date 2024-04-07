@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useRequest } from "../../core/hooks/useRequest";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
 
 // Styles
 import "./styles.css";
@@ -13,15 +12,24 @@ import UserPosts from "./components/UserPosts";
 
 const Profile = () => {
   const [profile, setProfile] = useState({});
+  const [stats, setStats] = useState({
+    posts: 0,
+    followers: 0,
+    following: 0,
+  });
   const sendRequest = useRequest();
   const navigate = useNavigate();
-  const avatarSelector = useSelector((state) => state.userSlice.avatar);
 
   const getProfile = () => {
     sendRequest("GET", "/profile")
       .then((response) => {
-        const { profile } = response.data;
+        const { profile, stats } = response.data;
         setProfile(profile);
+        setStats({
+          posts: stats.posts,
+          followers: 0,
+          following: 0,
+        });
       })
       .catch((error) => {
         // Profile not found
@@ -49,13 +57,13 @@ const Profile = () => {
 
           <div className="followers">
             <div>
-              <strong>0</strong> <span>posts</span>
+              <strong>{stats.posts}</strong> <span>posts</span>
             </div>
             <div>
-              <strong>5</strong> <span>followers</span>
+              <strong>{stats.followers}</strong> <span>followers</span>
             </div>
             <div>
-              <strong>17</strong> <span>following</span>
+              <strong>{stats.following}</strong> <span>following</span>
             </div>
           </div>
 
@@ -63,7 +71,7 @@ const Profile = () => {
         </div>
       </section>
 
-      <UserPosts />
+      <UserPosts posts={profile.posts} />
     </>
   );
 };

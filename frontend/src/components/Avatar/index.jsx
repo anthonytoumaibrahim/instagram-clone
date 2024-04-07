@@ -16,7 +16,11 @@ const Avatar = ({
   onClick,
 }) => {
   const avatarSelector = useSelector((state) => state.userSlice);
-  const url = avatar_url ? avatar_url : avatarSelector.avatar;
+  const url = avatar_url
+    ? avatar_url
+    : avatarSelector.avatar
+    ? avatarSelector.avatar
+    : default_avatar;
 
   const avatarImg = (
     <img
