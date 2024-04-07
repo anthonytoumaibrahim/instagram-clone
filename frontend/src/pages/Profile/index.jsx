@@ -2,14 +2,14 @@
 import "./styles.css";
 
 // Components
-import Avatar from "../../components/Avatar";
+import AvatarUploader from "./components/AvatarUploader";
 
 const Profile = () => {
   return (
     <>
       <section className="profile-info">
         <div className="avatar-uploader">
-          <Avatar size={150} />
+          <AvatarUploader />
         </div>
 
         <div className="info-wrapper">

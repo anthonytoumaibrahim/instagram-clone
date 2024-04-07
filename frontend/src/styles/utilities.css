@@ -16,3 +16,9 @@
 .text-center {
   text-align: center;
 }
+.hidden {
+  display: none;
+}
+.cursor-pointer {
+  cursor: pointer;
+}

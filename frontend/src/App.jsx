@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 
 // Toastify
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Layouts
 import UserLayout from "./pages/layouts/UserLayout";

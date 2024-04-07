@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 // Redux
 import { useDispatch } from "react-redux";
 
-// Core
-import { sendRequest } from "../../../../core/tools/remote/request";
+// Request hook
+import { useRequest } from "../../../../core/hooks/useRequest";
 
 // Components
 import Loader from "../../../../components/Loader";
@@ -23,6 +23,7 @@ import microsoft from "../../../../assets/landing/microsoft.png";
 const Authentication = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const sendRequest = useRequest();
   const [isLoading, setIsLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [authInfo, setAuthInfo] = useState({
