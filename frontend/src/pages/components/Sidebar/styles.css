@@ -28,9 +28,15 @@
   border-radius: 10px;
   transition: background-color 0.15s ease-in-out;
 }
+.nav-icon {
+  transition: scale 0.15s ease-in-out;
+}
 .sidebar-nav a.active {
   font-weight: 700;
 }
 .sidebar-nav a:hover {
   background-color: var(--gray-light-col);
+}
+.sidebar-nav a:hover .nav-icon {
+  scale: 1.15;
 }
