@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRequest } from "../../../core/hooks/useRequest";
 import { toast } from "react-toastify";
 
@@ -80,6 +80,17 @@ const CreatePost = ({ handleClose = () => {} }) => {
     }
   };
 
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const { files } = e.dataTransfer;
+
+    if (files && files.length) {
+      handleFilesUpload(files);
+    }
+  };
+
   return (
     <div className="post-modal">
       <LiaTimesSolid size={32} className="close-icon" onClick={handleClose} />
@@ -107,7 +118,11 @@ const CreatePost = ({ handleClose = () => {} }) => {
           )}{" "}
           Create new post
         </div>
-        <div className="content">
+        <div
+          className="content"
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={handleDrop}
+        >
           {stage === "upload" && (
             <div className="upload-files">
               <FcStackOfPhotos size={128} />
