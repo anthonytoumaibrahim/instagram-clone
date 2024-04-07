@@ -20,6 +20,7 @@ import UserLayout from "./pages/layouts/UserLayout";
 
 // Pages
 import Landing from "./pages/Landing";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   const tokenSelector = useSelector((state) => state.userSlice.token);
@@ -30,9 +31,13 @@ const App = () => {
         {tokenSelector ? (
           <Route path="/" element={<UserLayout />}>
             <Route index element={<>hello</>} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         ) : (
-          <Route path="/" element={<Landing />} />
+          <>
+            <Route path="/" element={<Landing />} />
+            <Route path="*" element={<NotFound />} />
+          </>
         )}
       </Routes>
     </BrowserRouter>
