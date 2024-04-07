@@ -10,6 +10,23 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function getProfile($username = null)
+    {
+        $username = $username ?? Auth::user()->username;
+        $profile = User::where('username', $username)->with('posts')->first();
+
+        if ($profile) {
+            return response()->json([
+                'profile' => $profile
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Profile not found.'
+        ], 422);
+    }
+
     public function uploadAvatar(Request $request)
     {
         $request->validate([

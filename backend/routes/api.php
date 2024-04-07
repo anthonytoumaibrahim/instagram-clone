@@ -15,5 +15,6 @@ Route::prefix('/auth')->middleware(['api', 'auth:api'])->controller(AuthControll
 });
 
 Route::middleware(['api', 'auth:api'])->controller(UserController::class)->group(function () {
+    Route::get('/profile/{username?}', 'getProfile');
     Route::post('/upload-pfp', 'uploadAvatar');
 });

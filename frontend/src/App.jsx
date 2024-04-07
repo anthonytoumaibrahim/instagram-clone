@@ -45,7 +45,9 @@ const App = () => {
         {tokenSelector ? (
           <Route path="/" element={<UserLayout />}>
             <Route index element={<>hello</>} />
-            <Route path="profile" element={<Profile />} />
+            <Route path="profile/:username?" loader={async () => {
+              
+            }} element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         ) : (

@@ -4,10 +4,9 @@ import { toast } from "react-toastify";
 import { useRequest } from "../../../../core/hooks/useRequest";
 
 // Redux
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
-const AvatarUploader = () => {
-  const avatarSelector = useSelector((state) => state.userSlice.avatar);
+const AvatarUploader = ({ avatar }) => {
   const dispatch = useDispatch();
   const request = useRequest();
 
@@ -39,7 +38,7 @@ const AvatarUploader = () => {
   return (
     <>
       <Avatar
-        avatar_url={avatarSelector}
+        avatar_url={avatar}
         size={150}
         className="cursor-pointer"
         onClick={() => inputRef.current.click()}
