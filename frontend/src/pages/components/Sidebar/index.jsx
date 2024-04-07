@@ -30,7 +30,8 @@ const Sidebar = () => {
         <CreatePost handleClose={() => showPostModal(!postModal)} />
       )}
       <aside className="sidebar">
-        <Logo size={120} />
+        <Logo size={120} className="sidebar-logo" />
+        <Logo size={32} responsive={true} className="sidebar-responsive-logo" />
 
         <nav className="sidebar-nav">
           <NavLink
@@ -41,27 +42,27 @@ const Sidebar = () => {
               isActive ? (
                 <>
                   <PiHouseFill size={22} className="nav-icon" />
-                  Home
+                  <span className="nav-label">Home</span>
                 </>
               ) : (
                 <>
                   <PiHouseBold size={22} className="nav-icon" />
-                  Home
+                  <span className="nav-label">Home</span>
                 </>
               )
             }
           </NavLink>
           <Link to="/search">
             <FiSearch size={22} className="nav-icon" />
-            Search
+            <span className="nav-label">Search</span>
           </Link>
           <Link to="/explore">
             <FaRegCompass size={22} className="nav-icon" />
-            Explore
+            <span className="nav-label">Explore</span>
           </Link>
           <Link to="/" onClick={() => showPostModal(!postModal)}>
             <FaRegSquarePlus size={22} className="nav-icon" />
-            Create
+            <span className="nav-label">Create</span>
           </Link>
           <NavLink
             to="/profile"
@@ -70,19 +71,13 @@ const Sidebar = () => {
             {({ isActive, isPending, isTransitioning }) =>
               isActive ? (
                 <>
-                  <Avatar
-                    size={22}
-                    className="nav-icon avatar-active"
-                  />
-                  Profile
+                  <Avatar size={22} className="nav-icon avatar-active" />
+                  <span className="nav-label">Profile</span>
                 </>
               ) : (
                 <>
-                  <Avatar
-                    size={22}
-                    className="nav-icon"
-                  />
-                  Profile
+                  <Avatar size={22} className="nav-icon" />
+                  <span className="nav-label">Profile</span>
                 </>
               )
             }

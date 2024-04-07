@@ -28,3 +28,12 @@
   display: flex;
   gap: 20px;
 }
+
+@media (max-width: 768px) {
+  .profile-info {
+    flex-direction: column;
+  }
+  .info-wrapper {
+    align-items: center;
+  }
+}

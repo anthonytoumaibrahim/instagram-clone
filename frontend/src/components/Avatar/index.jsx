@@ -13,7 +13,7 @@ const Avatar = ({
   username = null,
   alt = "Avatar",
   className,
-  onClick,
+  onClick = () => {},
 }) => {
   const avatarSelector = useSelector((state) => state.userSlice);
   const url = avatar_url
