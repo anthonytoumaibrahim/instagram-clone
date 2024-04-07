@@ -58,6 +58,9 @@
   min-height: 540px;
   display: flex;
 }
+.content-drag {
+  background-color: var(--gray-col);
+}
 .post-modal .body .content .upload-files {
   display: flex;
   flex-direction: column;

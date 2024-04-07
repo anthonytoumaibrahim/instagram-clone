@@ -1,5 +1,5 @@
 // React Router
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Styles
 import "./styles/main.css";
@@ -23,6 +23,7 @@ import UserLayout from "./pages/layouts/UserLayout";
 import Landing from "./pages/Landing";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import EditProfile from "./pages/EditProfile";
 
 const App = () => {
   const tokenSelector = useSelector((state) => state.userSlice.token);
@@ -45,11 +46,8 @@ const App = () => {
         {tokenSelector ? (
           <Route path="/" element={<UserLayout />}>
             <Route index element={<>hello</>} />
-            <Route
-              path="profile/:username?"
-              loader={async () => {}}
-              element={<Profile />}
-            />
+            <Route path="profile/:username?" element={<Profile />} />
+            <Route path="edit-profile" element={<EditProfile />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         ) : (

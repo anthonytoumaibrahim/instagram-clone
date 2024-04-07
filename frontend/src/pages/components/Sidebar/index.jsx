@@ -1,6 +1,7 @@
 // React stuff
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 // Logo
 import Logo from "../../../components/Logo";
@@ -10,12 +11,7 @@ import Avatar from "../../../components/Avatar";
 import CreatePost from "../CreatePost";
 
 // Icons
-import {
-  FaHouse,
-  FaMagnifyingGlass,
-  FaRegCompass,
-  FaRegSquarePlus,
-} from "react-icons/fa6";
+import { FaRegCompass, FaRegSquarePlus, FaPowerOff } from "react-icons/fa6";
 import { PiHouseBold, PiHouseFill } from "react-icons/pi";
 import { FiSearch } from "react-icons/fi";
 
@@ -23,7 +19,14 @@ import { FiSearch } from "react-icons/fi";
 import "./styles.css";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
   const [postModal, showPostModal] = useState(false);
+
+  const logout = () => {
+    dispatch({
+      type: "userSlice/removeUser",
+    });
+  };
   return (
     <>
       {postModal && (
@@ -82,6 +85,11 @@ const Sidebar = () => {
               )
             }
           </NavLink>
+
+          <Link to="/" className="logout-link" onClick={logout}>
+            <FaPowerOff size={22} className="nav-icon" />
+            <span className="nav-label">Log out</span>
+          </Link>
         </nav>
       </aside>
     </>

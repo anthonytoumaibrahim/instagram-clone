@@ -52,7 +52,12 @@ const Profile = () => {
         <div className="info-wrapper">
           <div className="username">
             <h3>{profile.username}</h3>
-            <button className="button button-muted">Edit profile</button>
+            <button
+              className="button button-muted"
+              onClick={() => navigate("/edit-profile")}
+            >
+              Edit profile
+            </button>
           </div>
 
           <div className="followers">

@@ -80,9 +80,21 @@ const CreatePost = ({ handleClose = () => {} }) => {
     }
   };
 
+  const dragAndDropRef = useRef(null);
+
+  const handleDrag = (e) => {
+    e.preventDefault();
+    dragAndDropRef.current.classList.add("content-drag");
+  };
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    dragAndDropRef.current.classList.remove("content-drag");
+  };
+
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    dragAndDropRef.current.classList.remove("content-drag");
 
     const { files } = e.dataTransfer;
 
@@ -120,8 +132,10 @@ const CreatePost = ({ handleClose = () => {} }) => {
         </div>
         <div
           className="content"
-          onDragOver={(e) => e.preventDefault()}
+          onDragOver={handleDrag}
+          onDragLeave={handleDragLeave}
           onDrop={handleDrop}
+          ref={dragAndDropRef}
         >
           {stage === "upload" && (
             <div className="upload-files">
