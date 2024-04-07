@@ -8,15 +8,27 @@ import { useSelector, useDispatch } from "react-redux";
 
 const AvatarUploader = () => {
   const avatarSelector = useSelector((state) => state.userSlice.avatar);
+  const dispatch = useDispatch();
   const request = useRequest();
 
   const handleUpload = async (file) => {
     const form = new FormData();
     form.append("image", file);
     await request("POST", "/upload-pfp", form)
-      .then((response) => {})
+      .then((response) => {
+        const { success, avatar } = response.data;
+        if (success) {
+          dispatch({
+            type: "userSlice/updateUser",
+            payload: {
+              avatar: avatar,
+            },
+          });
+        }
+      })
       .catch((error) => {
-        toast.error("Sorry, something went wrong.");
+        const { message } = error?.response?.data;
+        toast.error(message ?? "Sorry, something went wrong.");
       });
   };
 

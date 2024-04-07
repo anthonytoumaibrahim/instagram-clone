@@ -22,13 +22,18 @@ export const userSlice = createSlice({
       state.avatar = avatar;
       setLocalUser(state);
     },
+    updateUser: (state, action) => {
+      const { token, avatar } = action.payload;
+      state.token = token ?? state.token;
+      state.avatar = avatar ?? state.avatar;
+      setLocalUser(state);
+    },
     removeUser: (state, action) => {
       state.token = null;
       state.avatar = null;
       removeLocalUser();
     },
-    getIsLoggedIn: (state, action) => {},
   },
 });
 
-export const { addUser, removeUser } = userSlice.actions;
+export const { addUser, updateUser, removeUser } = userSlice.actions;
