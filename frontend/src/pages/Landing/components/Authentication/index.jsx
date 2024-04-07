@@ -87,6 +87,7 @@ const Authentication = () => {
             payload: {
               token: authorization.token,
               avatar: user.avatar,
+              username: user.username,
             },
           });
           return navigate("/");

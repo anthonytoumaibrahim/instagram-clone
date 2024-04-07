@@ -2,9 +2,6 @@
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 
-// Redux
-import { useSelector } from "react-redux";
-
 // Logo
 import Logo from "../../../components/Logo";
 
@@ -26,7 +23,6 @@ import { FiSearch } from "react-icons/fi";
 import "./styles.css";
 
 const Sidebar = () => {
-  const avatarSelector = useSelector((state) => state.userSlice.avatar);
   const [postModal, showPostModal] = useState(false);
   return (
     <>
@@ -76,7 +72,6 @@ const Sidebar = () => {
                 <>
                   <Avatar
                     size={22}
-                    avatar_url={avatarSelector}
                     className="nav-icon avatar-active"
                   />
                   Profile
@@ -85,7 +80,6 @@ const Sidebar = () => {
                 <>
                   <Avatar
                     size={22}
-                    avatar_url={avatarSelector}
                     className="nav-icon"
                   />
                   Profile

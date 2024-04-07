@@ -3,3 +3,10 @@
   object-fit: cover;
   object-position: center;
 }
+
+.avatar-with-name {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
