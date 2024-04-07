@@ -44,9 +44,11 @@
 h1,
 h2,
 h3,
-h4,
+h4 {
+  font-weight: 500;
+}
 h5 {
-  font-weight: 700;
+  font-weight: 400;
 }
 h1 {
   font-size: var(--font-size-4xl);

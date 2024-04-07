@@ -12,14 +12,15 @@ import "./styles/animations.css";
 // Redux
 import { useSelector } from "react-redux";
 
-// Protected Route
-import ProtectedRoute from "./core/routes/ProtectedRoute";
+// Toastify
+import { ToastContainer } from "react-toastify";
 
 // Layouts
 import UserLayout from "./pages/layouts/UserLayout";
 
 // Pages
 import Landing from "./pages/Landing";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -27,10 +28,23 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <Routes>
         {tokenSelector ? (
           <Route path="/" element={<UserLayout />}>
             <Route index element={<>hello</>} />
+            <Route path="profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         ) : (

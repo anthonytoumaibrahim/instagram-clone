@@ -6,11 +6,13 @@ import "./styles.css";
 const NotFound = () => {
   return (
     <div className="not-found text-center">
-      <h1>The page you requested could not be found.</h1>
-      <p>Please make sure you have the correct URL.</p>
-      <Link to="/" className="button button-primary">
-        Back to homepage
-      </Link>
+      <h2>Sorry, this page isn't available.</h2>
+      <p>
+        The link you followed may be broken, or the page may have been removed.{" "}
+        <Link to="/" className="link link-dark">
+          Go back to Instagram.
+        </Link>
+      </p>
     </div>
   );
 };

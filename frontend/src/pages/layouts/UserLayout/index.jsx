@@ -13,7 +13,7 @@ const UserLayout = () => {
     <>
       <main className="user-layout">
         <Sidebar />
-        <section className="container">
+        <section className="user-layout-full container">
           <Outlet />
           <Footer />
         </section>

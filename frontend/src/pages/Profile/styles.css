@@ -1,0 +1,30 @@
+.profile-info {
+  display: flex;
+  align-items: center;
+  margin-top: 32px;
+  gap: 40px;
+}
+
+.profile-info .avatar-uploader {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-info .info-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-info .info-wrapper .username {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-info .info-wrapper .followers {
+  display: flex;
+  gap: 20px;
+}

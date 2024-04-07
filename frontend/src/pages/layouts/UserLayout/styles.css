@@ -1,3 +1,8 @@
 .user-layout {
   display: flex;
 }
+
+.user-layout-full {
+  display: flex;
+  flex-direction: column;
+}
