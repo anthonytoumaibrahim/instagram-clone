@@ -31,6 +31,9 @@
 .nav-icon {
   transition: scale 0.15s ease-in-out;
 }
+.avatar-active {
+  outline: 2px solid #000;
+}
 .sidebar-nav a.active {
   font-weight: 700;
 }

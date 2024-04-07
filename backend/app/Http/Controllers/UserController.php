@@ -18,6 +18,13 @@ class UserController extends Controller
 
         $image = $request->file('image');
 
+        if ($image->getSize() > 2000000) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This image size must be under 2 MB.'
+            ], 422);
+        }
+
         // Store image
         $fileName = time() . "." . $image->getClientOriginalExtension();
         $path = '/avatars/';
@@ -28,9 +35,9 @@ class UserController extends Controller
             'avatar' => config('app.url') . '/storage' . $path . $fileName
         ]);
 
-        return [
+        return response()->json([
             'success' => true,
             'avatar' => $user->avatar
-        ];
+        ]);
     }
 }

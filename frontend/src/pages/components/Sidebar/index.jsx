@@ -1,5 +1,5 @@
 // React stuff
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 // Redux
 import { useSelector } from "react-redux";
@@ -17,6 +17,8 @@ import {
   FaRegCompass,
   FaRegSquarePlus,
 } from "react-icons/fa6";
+import { PiHouseBold, PiHouseFill } from "react-icons/pi";
+import { FiSearch } from "react-icons/fi";
 
 // Styles
 import "./styles.css";
@@ -28,12 +30,26 @@ const Sidebar = () => {
       <Logo size={120} />
 
       <nav className="sidebar-nav">
-        <Link to="/" className="active">
-          <FaHouse size={22} className="nav-icon" />
-          Home
-        </Link>
+        <NavLink
+          to="/"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          {({ isActive, isPending, isTransitioning }) =>
+            isActive ? (
+              <>
+                <PiHouseFill size={22} className="nav-icon" />
+                Home
+              </>
+            ) : (
+              <>
+                <PiHouseBold size={22} className="nav-icon" />
+                Home
+              </>
+            )
+          }
+        </NavLink>
         <Link to="/search">
-          <FaMagnifyingGlass size={22} className="nav-icon" />
+          <FiSearch size={22} className="nav-icon" />
           Search
         </Link>
         <Link to="/explore">
@@ -41,9 +57,35 @@ const Sidebar = () => {
           Explore
         </Link>
         <Link to="/profile">
-          <Avatar size={22} avatar_url={avatarSelector} className="nav-icon" />
-          Profile
+          <FaRegSquarePlus size={22} className="nav-icon" />
+          Create
         </Link>
+        <NavLink
+          to="/profile"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          {({ isActive, isPending, isTransitioning }) =>
+            isActive ? (
+              <>
+                <Avatar
+                  size={22}
+                  avatar_url={avatarSelector}
+                  className="nav-icon avatar-active"
+                />
+                Profile
+              </>
+            ) : (
+              <>
+                <Avatar
+                  size={22}
+                  avatar_url={avatarSelector}
+                  className="nav-icon"
+                />
+                Profile
+              </>
+            )
+          }
+        </NavLink>
       </nav>
     </aside>
   );

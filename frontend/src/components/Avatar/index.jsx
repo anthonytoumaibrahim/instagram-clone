@@ -17,6 +17,7 @@ const Avatar = ({
       src={url}
       alt={alt}
       width={size}
+      height={size}
       className={`avatar ${className}`}
       onClick={() => onClick()}
     />

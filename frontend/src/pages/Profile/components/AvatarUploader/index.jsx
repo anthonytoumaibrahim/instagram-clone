@@ -12,6 +12,9 @@ const AvatarUploader = () => {
   const request = useRequest();
 
   const handleUpload = async (file) => {
+    if (!file) {
+      return;
+    }
     const form = new FormData();
     form.append("image", file);
     await request("POST", "/upload-pfp", form)
