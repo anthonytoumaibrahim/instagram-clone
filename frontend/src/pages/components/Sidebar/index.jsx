@@ -88,6 +88,7 @@ const Sidebar = () => {
           </Link>
           <NavLink
             to="/profile"
+            end
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             {({ isActive, isPending, isTransitioning }) =>

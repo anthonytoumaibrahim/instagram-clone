@@ -2,6 +2,10 @@ import Modal from "../../../components/Modal";
 import Avatar from "../../../components/Avatar";
 import "./styles.css";
 
+// React Carousel
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
+
 const PostModal = ({ data, handleClose }) => {
   const { user } = data;
 
@@ -9,11 +13,24 @@ const PostModal = ({ data, handleClose }) => {
     <Modal handleClose={handleClose}>
       <div className="post-body">
         <div className="uploaded-images">
-          <img
-            src={data.images[0].image_url}
-            alt=""
-            className="uploaded-image"
-          />
+          {data.images.length > 1 ? (
+            <Carousel showArrows={false} showStatus={false} showThumbs={false}>
+              {data.images.map((image) => (
+                <img
+                  key={image.id}
+                  src={image.image_url}
+                  alt=""
+                  className="uploaded-image"
+                />
+              ))}
+            </Carousel>
+          ) : (
+            <img
+              src={data.images[0].image_url}
+              alt=""
+              className="uploaded-image"
+            />
+          )}
         </div>
 
         <div className="options">

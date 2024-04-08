@@ -10,6 +10,9 @@
   padding: 14px;
   gap: 20px;
   width: 100%;
+  background: #fff;
+  position: relative;
+  z-index: 1;
 }
 
 .post-body .options .avatar-wrapper {

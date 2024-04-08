@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useRequest } from "../../core/hooks/useRequest";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaLink } from "react-icons/fa6";
-
+import { useSelector } from "react-redux";
 // Styles
 import "./styles.css";
 
@@ -14,8 +14,10 @@ import UserPosts from "../components/UserPosts";
 // Icons
 import { IoMdGrid } from "react-icons/io";
 import { TbUserSquare } from "react-icons/tb";
+import Avatar from "../../components/Avatar";
 
 const Profile = () => {
+  const usernameSelector = useSelector((state) => state.userSlice.username);
   const [profile, setProfile] = useState({});
   const [stats, setStats] = useState({
     posts: 0,
@@ -24,9 +26,10 @@ const Profile = () => {
   });
   const sendRequest = useRequest();
   const navigate = useNavigate();
+  const { username } = useParams();
 
   const getProfile = () => {
-    sendRequest("GET", "/profile")
+    sendRequest("GET", `/profile${username ? `/${username}` : ""}`)
       .then((response) => {
         const { profile, stats } = response.data;
         setProfile(profile);
@@ -45,24 +48,30 @@ const Profile = () => {
 
   useEffect(() => {
     getProfile();
-  }, []);
+  }, [username]);
 
   return (
     <>
       <section className="profile-info">
         <div className="avatar-uploader">
-          <AvatarUploader avatar={profile.avatar} />
+          {usernameSelector === username || !username ? (
+            <AvatarUploader avatar={profile.avatar} />
+          ) : (
+            <Avatar avatar_url={profile.avatar} size={150} />
+          )}
         </div>
 
         <div className="info-wrapper">
           <div className="username">
             <h3>{profile.username}</h3>
-            <button
-              className="button button-muted"
-              onClick={() => navigate("/edit-profile")}
-            >
-              Edit profile
-            </button>
+            {(usernameSelector === username || !username) && (
+              <button
+                className="button button-muted"
+                onClick={() => navigate("/edit-profile")}
+              >
+                Edit profile
+              </button>
+            )}
           </div>
 
           <div className="followers">
