@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRequest } from "../../../core/hooks/useRequest";
 import { toast } from "react-toastify";
 import Modal from "../../../components/Modal";
@@ -7,7 +7,6 @@ import Modal from "../../../components/Modal";
 import "./styles.css";
 
 // Icons
-import { LiaTimesSolid } from "react-icons/lia";
 import { FcStackOfPhotos } from "react-icons/fc";
 import { GoArrowLeft } from "react-icons/go";
 import Avatar from "../../../components/Avatar";
