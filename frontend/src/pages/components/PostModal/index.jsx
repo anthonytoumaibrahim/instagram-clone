@@ -129,11 +129,11 @@ const PostModal = ({ data, handleClose }) => {
                 <p className="font-bold">{data.liked_by_users_count} likes</p>
                 <p>{new Date(data.created_at).toLocaleDateString("en-GB")}</p>
               </div>
-              <FaRegHeart
-                size={24}
-                onClick={likePost}
-                className={`${data.liked_by_user ? "text-error" : ""}`}
-              />
+              {data.liked_by_user ? (
+                <FaHeart size={24} onClick={likePost} className="text-error" />
+              ) : (
+                <FaRegHeart size={24} onClick={likePost} />
+              )}
             </div>
             <div className="comment-form">
               <textarea

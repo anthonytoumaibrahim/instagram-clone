@@ -73,11 +73,12 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'emailOrPhone' => 'required|unique:users,email|unique:users,phone',
             'fullName' => 'required',
-            'username' => 'required|min:6|max:20|alpha_dash|unique:users,username',
+            'username' => ['required', 'min:6', 'max:20', 'unique:users,username', 'regex:/^[a-zA-Z0-9_.]+$/i'],
             'password' => 'required|min:8'
         ], [
             'emailOrPhone.required' => 'Please enter an email address or mobile number.',
             'username.required' => 'Please enter a username, between 6 and 20 characters.',
+            'username.regex' => 'The username can only contain alphanumeric characters, underscores and dots.',
             'username.unique' => 'This username is already taken. Please try another.',
             'password.required' => 'Please enter your password.',
             'password.min' => 'Please make sure your password is at least 8 characters long.'
