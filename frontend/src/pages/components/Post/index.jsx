@@ -6,6 +6,7 @@ import { BsImages } from "react-icons/bs";
 
 import PostModal from "../PostModal";
 import Avatar from "../../../components/Avatar";
+import { Link } from "react-router-dom";
 
 const Post = ({ post, images, fullForm = false }) => {
   const [showPost, setShowPost] = useState(false);
@@ -28,6 +29,21 @@ const Post = ({ post, images, fullForm = false }) => {
             <BsImages size={24} className="multiple-images" />
           )}
           <img src={images[0].image_url} className="post-image" />
+
+          <div className="post-footer">
+            <p className="post-likes">{post.liked_by_users_count} likes</p>
+            <div className="post-caption">
+              <Link className="username" to={`/profile/${post.user.username}`}>
+                {post.user.username}
+              </Link>
+              <p>{post.caption}</p>
+            </div>
+            <p className="text-muted">
+              View all {post.comments_count !== 0 ? post.comments_count : ""}{" "}
+              comments
+            </p>
+            <p className="text-muted">Add a comment...</p>
+          </div>
         </div>
       ) : (
         <div className="post" onClick={() => setShowPost(true)}>

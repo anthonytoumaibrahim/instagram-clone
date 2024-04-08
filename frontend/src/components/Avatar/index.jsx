@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 // Default Avatar
 import default_avatar from "../../assets/avatar.jpg";
@@ -37,7 +37,10 @@ const Avatar = ({
     />
   );
   return username ? (
-    <Link to={`${username !== true ? `/profile/${username}` : ''}`} className="avatar-with-name">
+    <Link
+      to={`${username !== true ? `/profile/${username}` : ""}`}
+      className="avatar-with-name"
+    >
       {avatarImg}{" "}
       <span>{username === true ? avatarSelector.username : username}</span>
     </Link>

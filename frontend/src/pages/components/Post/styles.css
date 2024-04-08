@@ -11,10 +11,27 @@
   border: 1px solid var(--gray-col);
   border-radius: 10px;
   overflow: hidden;
+  position: relative;
 }
 .posts-full .post .post-header {
   padding: 10px 20px;
   border-bottom: 1px solid var(--gray-col);
+}
+.posts-full .post .post-footer {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.posts-full .post .post-caption {
+  display: flex;
+  align-items: start;
+  gap: 6px;
+}
+.posts-full .username,
+.posts-full .post-likes {
+  font-weight: 500;
+  color: #000;
 }
 .posts .post:hover::after,
 .posts .post:hover .likes-and-comments {
