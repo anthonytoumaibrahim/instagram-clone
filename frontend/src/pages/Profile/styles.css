@@ -16,6 +16,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-width: 360px;
 }
 
 .profile-info .info-wrapper .username {
@@ -27,6 +28,17 @@
 .profile-info .info-wrapper .followers {
   display: flex;
   gap: 20px;
+}
+
+.profile-info .bio {
+  display: flex;
+  flex-direction: column;
+  white-space: pre-wrap;
+}
+.profile-info .bio .website-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 @media (max-width: 768px) {

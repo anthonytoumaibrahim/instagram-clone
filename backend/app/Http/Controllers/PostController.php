@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+    public function getAllPosts(Request $request)
+    {
+        $limit = $request->limit ?? 10;
+        $posts = Post::with('images')->limit($limit)->get();
+
+        return response()->json($posts);
+    }
+
     public function create(Request $request)
     {
         $request->validate([

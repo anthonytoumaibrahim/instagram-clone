@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRequest } from "../../core/hooks/useRequest";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaLink } from "react-icons/fa6";
 
 // Styles
 import "./styles.css";
@@ -73,6 +74,19 @@ const Profile = () => {
           </div>
 
           <p className="font-bold">{profile.full_name}</p>
+
+          <div className="bio">
+            {profile.bio}
+            {profile.website && (
+              <a
+                className="website-link"
+                href={profile.website}
+                target="_blank"
+              >
+                <FaLink /> {profile.website}
+              </a>
+            )}
+          </div>
         </div>
       </section>
 

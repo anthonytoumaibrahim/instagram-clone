@@ -16,7 +16,7 @@ const Modal = forwardRef((props, ref) => {
       />
       <div className="overlay" onClick={props.handleClose}></div>
       <div className="body">
-        <div className="title">{props.title}</div>
+        {props.title && <div className="title">{props.title}</div>}
         <div
           className="content"
           onDragOver={props.onDragOver}
