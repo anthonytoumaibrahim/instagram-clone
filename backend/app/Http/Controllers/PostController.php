@@ -13,7 +13,8 @@ class PostController extends Controller
     public function getAllPosts(Request $request)
     {
         $limit = $request->limit ?? 10;
-        $posts = Post::whereNot('user_id', Auth::id())->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->limit($limit)->get();
+        
+        $posts = Post::whereNot('user_id', Auth::id())->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->withCount(['likedByUsers', 'comments'])->limit($limit)->get();
 
         return response()->json($posts);
     }

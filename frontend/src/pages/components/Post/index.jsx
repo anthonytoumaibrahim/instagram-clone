@@ -20,10 +20,10 @@ const Post = ({ post, images }) => {
         <img src={images[0].image_url} />
         <div className="likes-and-comments">
           <div>
-            <FaHeart /> 288
+            <FaHeart /> {post.liked_by_users_count}
           </div>
           <div>
-            <FaComments /> 11
+            <FaComments /> {post.comments_count}
           </div>
         </div>
       </div>

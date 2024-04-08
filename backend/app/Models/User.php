@@ -76,6 +76,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Post::class)->orderBy('created_at', 'DESC');
     }
 
+    public function likedPosts()
+    {
+        return $this->hasMany(Post::class, 'post_likes', 'user_id', 'post_id');
+    }
+
     public function following()
     {
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'following_id');

@@ -2,24 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
     public function getProfile($username = null)
     {
         $username = $username ?? Auth::user()->username;
-        $user = User::where('username', $username)->select('id', 'full_name', 'username', 'avatar', 'bio', 'website')->with('posts.images:id,image_url,post_id', 'posts.user:id,username,avatar')->withCount(['followers', 'following', 'posts'])->first();
+        $user = User::where('username', $username)->select('id', 'full_name', 'username', 'avatar', 'bio', 'website')->withCount(['followers', 'following', 'posts'])->first();
 
-        $user->is_following = Auth::user()->following()->find($user->id) ? true : false;
+        $user->is_following = Auth::user()->following->find($user->id) ? true : false;
+
+        $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->withCount(['likedByUsers', 'comments'])->get();
 
         if ($user) {
             return response()->json([
                 'profile' => $user,
+                'posts' => $posts
             ]);
         }
 

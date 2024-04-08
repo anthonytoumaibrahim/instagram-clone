@@ -20,6 +20,7 @@ import FollowButton from "./components/FollowButton";
 const Profile = () => {
   const usernameSelector = useSelector((state) => state.userSlice.username);
   const [profile, setProfile] = useState({});
+  const [posts, setPosts] = useState([]);
   const sendRequest = useRequest();
   const navigate = useNavigate();
   const { username } = useParams();
@@ -29,8 +30,9 @@ const Profile = () => {
   const getProfile = () => {
     sendRequest("GET", `/profile${username ? `/${username}` : ""}`)
       .then((response) => {
-        const { profile } = response.data;
+        const { profile, posts } = response.data;
         setProfile(profile);
+        setPosts(posts);
       })
       .catch((error) => {
         // Profile not found
@@ -118,7 +120,7 @@ const Profile = () => {
           <TbUserSquare /> Tagged
         </button>
       </div>
-      <UserPosts posts={profile.posts} />
+      <UserPosts posts={posts} />
     </>
   );
 };
