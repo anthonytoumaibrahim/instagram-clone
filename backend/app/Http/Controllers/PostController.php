@@ -67,7 +67,7 @@ class PostController extends Controller
     {
         $request->validate([
             'post_id' => 'required|exists:posts,id',
-            'comment' => 'required|min:10|max:150'
+            'comment' => 'required|max:150'
         ]);
 
         $comment = new PostComment();

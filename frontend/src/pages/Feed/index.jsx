@@ -39,7 +39,7 @@ const Feed = () => {
           </Link>
         </div>
       ) : (
-        <UserPosts />
+        <UserPosts fullForm={true} />
       )}
     </div>
   );

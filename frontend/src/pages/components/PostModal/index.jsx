@@ -143,7 +143,7 @@ const PostModal = ({ data, handleClose }) => {
               ></textarea>
               <Button
                 loading={isLoading}
-                disabled={comment.length < 10}
+                disabled={comment.length < 1}
                 onClick={submitComment}
               >
                 Post

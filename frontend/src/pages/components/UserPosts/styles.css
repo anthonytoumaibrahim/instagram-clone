@@ -1,57 +1,13 @@
+.posts-full {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
 .posts {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 4px;
-}
-.posts .post {
-  position: relative;
-  cursor: pointer;
-  aspect-ratio: 1 / 1;
-  height: 100%;
-  overflow: clip;
-}
-.posts .post:hover::after,
-.posts .post:hover .likes-and-comments {
-  opacity: 1;
-}
-.posts .post::after {
-  content: "";
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.35);
-  opacity: 0;
-}
-.posts .post img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.post .likes-and-comments {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  color: #ffffff;
-  z-index: 1;
-  translate: -50% -50%;
-  opacity: 0;
-}
-.post .likes-and-comments div {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: var(--font-size-lg);
-}
-.post .multiple-images {
-  position: absolute;
-  color: #ffffff;
-  top: 10px;
-  right: 10px;
 }
 
 @media (max-width: 1024px) {
