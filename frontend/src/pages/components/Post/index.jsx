@@ -6,12 +6,12 @@ import { BsImages } from "react-icons/bs";
 
 import PostModal from "../PostModal";
 
-const Post = ({ post, images }) => {
+const Post = ({ post, updatePost, images }) => {
   const [showPost, setShowPost] = useState(false);
   return (
     <>
       {showPost && (
-        <PostModal data={post} handleClose={() => setShowPost(false)} />
+        <PostModal data={post} updatePost={(id, data) => updatePost(id, data)} handleClose={() => setShowPost(false)} />
       )}
       <div className="post" onClick={() => setShowPost(true)}>
         {images.length > 1 && (

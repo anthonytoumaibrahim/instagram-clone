@@ -8,6 +8,21 @@ const Explore = () => {
   const sendRequest = useRequest();
   const [posts, setPosts] = useState([]);
 
+  const updatePost = (id, data) => {
+    const newPosts = posts.map((post) =>
+      post.id === id
+        ? {
+            ...post,
+            liked_by_users_count: data
+              ? post.liked_by_users_count + 1
+              : post.liked_by_users_count - 1,
+            liked_by_user: data,
+          }
+        : post
+    );
+    setPosts(newPosts);
+  };
+
   useEffect(() => {
     sendRequest("GET", "/get-posts?limit=10")
       .then((response) => {
@@ -19,7 +34,10 @@ const Explore = () => {
   }, []);
   return (
     <div className="margin-top">
-      <UserPosts posts={posts} />
+      <UserPosts
+        posts={posts}
+        updatePost={(id, data) => updatePost(id, data)}
+      />
     </div>
   );
 };

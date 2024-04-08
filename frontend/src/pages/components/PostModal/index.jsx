@@ -18,13 +18,12 @@ import { Carousel } from "react-responsive-carousel";
 import { FaRegHeart, FaHeart } from "react-icons/fa6";
 import PostComment from "../PostComment";
 
-const PostModal = ({ data, handleClose }) => {
+const PostModal = ({ data, updatePost, handleClose }) => {
   const sendRequest = useRequest();
   const { user } = data;
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [likesPost, setLikesPost] = useState(data.liked_by_user);
 
   const getComments = async () => {
     sendRequest("GET", `/comments?post_id=${data.id}`)
@@ -41,7 +40,7 @@ const PostModal = ({ data, handleClose }) => {
     })
       .then((response) => {
         const { success } = response;
-        setLikesPost(!likesPost);
+        updatePost(data.id, !data.liked_by_user);
       })
       .catch((error) => {
         toast.error("Sorry, couldn't like post.");
@@ -122,7 +121,7 @@ const PostModal = ({ data, handleClose }) => {
               <FaRegHeart
                 size={24}
                 onClick={likePost}
-                className={`${likesPost ? "text-error" : ""}`}
+                className={`${data.liked_by_user ? "text-error" : ""}`}
               />
             </div>
             <div className="comment-form">
