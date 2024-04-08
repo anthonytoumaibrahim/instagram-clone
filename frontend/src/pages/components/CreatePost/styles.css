@@ -52,6 +52,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+.caption-editor .uploaded-images .nb-of-images {
+  position: absolute;
+  color: #fff;
+  background-color: rgba(0,0,0,0.45);
+  padding: 4px;
+  border-radius: 4px;
+  bottom: 12px;
+  right: 12px;
 }
 .caption-editor .uploaded-images .uploaded-image {
   width: 540px;

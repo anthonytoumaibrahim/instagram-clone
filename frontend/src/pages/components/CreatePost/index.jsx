@@ -51,6 +51,7 @@ const CreatePost = ({ handleClose = () => {} }) => {
   };
 
   const handleFilesUpload = (files) => {
+    const UPLOAD_LIMIT = 5;
     const acceptedTypes = [
       "image/jpeg",
       "image/jpg",
@@ -61,6 +62,9 @@ const CreatePost = ({ handleClose = () => {} }) => {
     ];
     let validatedFiles = [];
     for (let i = 0; i < files.length; i++) {
+      if(i === UPLOAD_LIMIT) {
+        break;
+      }
       const type = files[i].type;
       if (acceptedTypes.includes(type)) {
         validatedFiles.push(files[i]);
@@ -157,6 +161,7 @@ const CreatePost = ({ handleClose = () => {} }) => {
       {stage === "caption" && (
         <div className="caption-editor">
           <div className="uploaded-images">
+            <span className="nb-of-images">{files.length} images</span>
             <img src={previewData} alt="" className="uploaded-image" />
           </div>
 

@@ -17,7 +17,7 @@ import FollowButton from "./components/FollowButton";
 // Icons
 import { IoMdGrid } from "react-icons/io";
 import { TbUserSquare } from "react-icons/tb";
-import { RiImageAddLine } from "react-icons/ri";
+import { FcRemoveImage } from "react-icons/fc";
 
 const Profile = () => {
   const usernameSelector = useSelector((state) => state.userSlice.username);
@@ -133,8 +133,12 @@ const Profile = () => {
         <UserPosts />
       ) : (
         <div className="no-posts-yet">
-          <RiImageAddLine size={44} />
-          <h3>You don't have any posts yet</h3>
+          <FcRemoveImage size={64} />
+          <h3>
+            {isOwner
+              ? "You don't have any posts yet"
+              : "This user doesn't have any posts yet"}
+          </h3>
         </div>
       )}
     </>

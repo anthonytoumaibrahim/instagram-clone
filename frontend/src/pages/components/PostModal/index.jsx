@@ -81,7 +81,12 @@ const PostModal = ({ data, handleClose }) => {
       <div className="post-body">
         <div className="uploaded-images">
           {data.images.length > 1 ? (
-            <Carousel showArrows={false} showStatus={false} showThumbs={false}>
+            <Carousel
+              swipeable={true}
+              showArrows={false}
+              showStatus={false}
+              showThumbs={false}
+            >
               {data.images.map((image) => (
                 <img
                   key={image.id}

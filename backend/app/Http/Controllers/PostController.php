@@ -99,6 +99,9 @@ class PostController extends Controller
         $index = 0;
         foreach ($images as $image) {
             $index++;
+            if ($index === 5) {
+                break;
+            }
             // Store image
             $fileName = time() . "_" . $index . "." . $image->getClientOriginalExtension();
             $path = '/posts/';
