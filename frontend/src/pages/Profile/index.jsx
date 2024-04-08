@@ -67,7 +67,16 @@ const Profile = () => {
             )}
             {!isOwner && (
               <>
-                <FollowButton id={profile.id} />
+                <FollowButton
+                  id={profile.id}
+                  is_following={profile.is_following}
+                  handleFollow={() =>
+                    setProfile({
+                      ...profile,
+                      is_following: !profile.is_following,
+                    })
+                  }
+                />
               </>
             )}
           </div>

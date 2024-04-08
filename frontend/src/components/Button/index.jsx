@@ -4,12 +4,14 @@ const Button = ({
   primary = true,
   loading = false,
   onClick,
-  className,
+  className = "",
   children,
 }) => {
   return (
     <button
-      className={`button ${primary ? "button-primary" : ""} ${className}`}
+      className={`button ${
+        primary ? "button-primary" : "button-muted"
+      } ${className}`}
       disabled={loading}
       onClick={() => onClick()}
     >
