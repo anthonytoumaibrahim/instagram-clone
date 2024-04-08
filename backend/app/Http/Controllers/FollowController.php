@@ -8,6 +8,18 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowController extends Controller
 {
+    public function getFeed()
+    {
+        $user = User::with('following.posts')->find(Auth::id())->following
+            ->pluck('posts')
+            ->collapse();
+        $posts = $user;
+
+        return response()->json([
+            'posts' => $posts
+        ]);
+    }
+
     public function follow(Request $request)
     {
         $request->validate([

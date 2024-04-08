@@ -28,6 +28,9 @@ Route::middleware(['api', 'auth:api'])->group(function () {
         Route::get('/get-posts', 'getAllPosts');
         Route::post('/create-post', 'create');
     });
-    
-    Route::post('/follow', [FollowController::class, 'follow']);
+
+    Route::controller(FollowController::class)->group(function () {
+        Route::get('/feed', 'getFeed');
+        Route::post('/follow', 'follow');
+    });
 });
