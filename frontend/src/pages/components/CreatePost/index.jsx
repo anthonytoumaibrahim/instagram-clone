@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRequest } from "../../../core/hooks/useRequest";
 import { toast } from "react-toastify";
+import Modal from "../../../components/Modal";
 
 // Styles
 import "./styles.css";
@@ -105,81 +106,73 @@ const CreatePost = ({ handleClose = () => {} }) => {
   };
 
   return (
-    <div className="post-modal">
-      <LiaTimesSolid size={32} className="close-icon" onClick={handleClose} />
-      <div className="overlay" onClick={handleClose}></div>
-      <div className="body">
-        <div className="title">
-          {stage !== "upload" && (
-            <>
-              <GoArrowLeft
-                size={32}
-                className="back-btn"
-                onClick={() => {
-                  setStage("upload");
-                  setFiles([]);
-                }}
-              />
-              <button
-                className="post-btn button button-primary"
-                onClick={submitPost}
-                ref={btnRef}
-              >
-                Post
-              </button>
-            </>
-          )}{" "}
-          Create new post
+    <Modal
+      title="Create new post"
+      handleClose={handleClose}
+      onDragOver={handleDrag}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      ref={dragAndDropRef}
+    >
+      {stage !== "upload" && (
+        <>
+          <GoArrowLeft
+            size={32}
+            className="back-btn"
+            onClick={() => {
+              setStage("upload");
+              setFiles([]);
+            }}
+          />
+          <button
+            className="post-btn button button-primary"
+            onClick={submitPost}
+            ref={btnRef}
+          >
+            Post
+          </button>
+        </>
+      )}
+      {stage === "upload" && (
+        <div className="upload-files">
+          <FcStackOfPhotos size={128} />
+
+          <h3>Drag photos here</h3>
+
+          <button
+            className="button button-primary"
+            onClick={() => inputRef.current.click()}
+          >
+            Select from computer
+          </button>
+          <input
+            type="file"
+            className="hidden"
+            ref={inputRef}
+            multiple
+            onChange={(e) => handleFilesUpload(e.target.files)}
+          />
         </div>
-        <div
-          className="content"
-          onDragOver={handleDrag}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-          ref={dragAndDropRef}
-        >
-          {stage === "upload" && (
-            <div className="upload-files">
-              <FcStackOfPhotos size={128} />
+      )}
 
-              <h3>Drag photos here</h3>
+      {stage === "caption" && (
+        <div className="caption-editor">
+          <div className="uploaded-images">
+            <img src={previewData} alt="" className="uploaded-image" />
+          </div>
 
-              <button
-                className="button button-primary"
-                onClick={() => inputRef.current.click()}
-              >
-                Select from computer
-              </button>
-              <input
-                type="file"
-                className="hidden"
-                ref={inputRef}
-                multiple
-                onChange={(e) => handleFilesUpload(e.target.files)}
-              />
-            </div>
-          )}
-
-          {stage === "caption" && (
-            <div className="caption-editor">
-              <div className="uploaded-images">
-                <img src={previewData} alt="" className="uploaded-image" />
-              </div>
-
-              <div className="options">
-                <Avatar size={28} username={true} />
-                <textarea
-                  className="post-caption-editor"
-                  placeholder="Write your caption here..."
-                  value={caption}
-                  onChange={(e) => setCaption(e.target.value)}
-                ></textarea>
-              </div>
-            </div>
-          )}
+          <div className="options">
+            <Avatar size={28} username={true} />
+            <textarea
+              className="post-caption-editor"
+              placeholder="Write your caption here..."
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
+            ></textarea>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </Modal>
   );
 };
 

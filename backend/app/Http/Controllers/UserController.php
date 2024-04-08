@@ -13,7 +13,7 @@ class UserController extends Controller
     public function getProfile($username = null)
     {
         $username = $username ?? Auth::user()->username;
-        $user = User::where('username', $username)->with('posts.images')->first();
+        $user = User::where('username', $username)->select('id', 'full_name', 'username', 'avatar', 'bio', 'website')->with('posts.images')->first();
 
         if ($user) {
             return response()->json([
@@ -32,19 +32,21 @@ class UserController extends Controller
 
     public function getProfileSettings()
     {
-        $user = User::select('website', 'bio')->find(Auth::id());
+        $user = User::select('website', 'bio', 'full_name')->find(Auth::id());
         return response()->json($user);
     }
 
     public function updateProfileSettings(Request $request)
     {
         $request->validate([
-            'bio' => 'max:150',
-            'website' => 'url|max:255'
+            'fullName' => 'required',
+            'bio' => 'nullable|max:150',
+            'website' => 'nullable|url|max:255'
         ]);
 
         $user = User::find(Auth::id());
         $user->updateOrFail([
+            'full_name' => $request->fullName,
             'website' => $request->website,
             'bio' => $request->bio
         ]);
