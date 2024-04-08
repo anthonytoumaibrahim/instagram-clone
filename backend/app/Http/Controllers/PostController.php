@@ -13,7 +13,7 @@ class PostController extends Controller
     public function getAllPosts(Request $request)
     {
         $limit = $request->limit ?? 10;
-        $posts = Post::whereNot('user_id', Auth::id())->with('images', 'user:id,username,avatar')->limit($limit)->get();
+        $posts = Post::whereNot('user_id', Auth::id())->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->limit($limit)->get();
 
         return response()->json($posts);
     }
@@ -21,7 +21,7 @@ class PostController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'caption' => 'required|min:12|max:1200',
+            'caption' => 'required|max:1200',
             'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048'
         ]);
 

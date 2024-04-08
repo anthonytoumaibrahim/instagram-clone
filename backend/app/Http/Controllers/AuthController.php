@@ -73,7 +73,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'emailOrPhone' => 'required|unique:users,email|unique:users,phone',
             'fullName' => 'required',
-            'username' => 'required|min:6|max:20|unique:users,username',
+            'username' => 'required|min:6|max:20|alpha_dash|unique:users,username',
             'password' => 'required|min:8'
         ], [
             'emailOrPhone.required' => 'Please enter an email address or mobile number.',

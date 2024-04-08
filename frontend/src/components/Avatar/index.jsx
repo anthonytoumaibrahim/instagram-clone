@@ -37,7 +37,7 @@ const Avatar = ({
     />
   );
   return username ? (
-    <Link to={`/profile/${username}`} className="avatar-with-name">
+    <Link to={`${username !== true ? `/profile/${username}` : ''}`} className="avatar-with-name">
       {avatarImg}{" "}
       <span>{username === true ? avatarSelector.username : username}</span>
     </Link>
