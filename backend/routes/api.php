@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -27,4 +28,6 @@ Route::middleware(['api', 'auth:api'])->group(function () {
         Route::get('/get-posts', 'getAllPosts');
         Route::post('/create-post', 'create');
     });
+    
+    Route::post('/follow', [FollowController::class, 'follow']);
 });

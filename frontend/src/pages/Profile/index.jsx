@@ -19,11 +19,6 @@ import Avatar from "../../components/Avatar";
 const Profile = () => {
   const usernameSelector = useSelector((state) => state.userSlice.username);
   const [profile, setProfile] = useState({});
-  const [stats, setStats] = useState({
-    posts: 0,
-    followers: 0,
-    following: 0,
-  });
   const sendRequest = useRequest();
   const navigate = useNavigate();
   const { username } = useParams();
@@ -31,13 +26,8 @@ const Profile = () => {
   const getProfile = () => {
     sendRequest("GET", `/profile${username ? `/${username}` : ""}`)
       .then((response) => {
-        const { profile, stats } = response.data;
+        const { profile } = response.data;
         setProfile(profile);
-        setStats({
-          posts: stats.posts,
-          followers: 0,
-          following: 0,
-        });
       })
       .catch((error) => {
         // Profile not found
@@ -76,13 +66,13 @@ const Profile = () => {
 
           <div className="followers">
             <div>
-              <strong>{stats.posts}</strong> <span>posts</span>
+              <strong>{profile.posts_count}</strong> <span>posts</span>
             </div>
             <div>
-              <strong>{stats.followers}</strong> <span>followers</span>
+              <strong>{profile.followers_count}</strong> <span>followers</span>
             </div>
             <div>
-              <strong>{stats.following}</strong> <span>following</span>
+              <strong>{profile.following_count}</strong> <span>following</span>
             </div>
           </div>
 
