@@ -3,6 +3,11 @@
   flex-direction: column;
   gap: 8px;
 }
+.comments-wrapper .avatar-date-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .comments-wrapper .comment .date {
   font-size: var(--font-size-sm);
   color: var(--gray-dark-col);

@@ -7,9 +7,13 @@ const PostComment = ({ data }) => {
 
   return (
     <div className="comment">
-      <Avatar avatar_url={user.avatar} username={user.username} />
+      <div className="avatar-date-wrapper">
+        <Avatar avatar_url={user.avatar} username={user.username} />
+        <p className="date">
+          {new Date(data.created_at).toLocaleDateString("en-GB")}
+        </p>
+      </div>
       <p>{comment}</p>
-      <p className="date">{new Date(data.created_at).toLocaleDateString("en-GB")}</p>
     </div>
   );
 };
