@@ -1,4 +1,4 @@
-import Modal from "../../../../components/Modal";
+import Modal from "../../../components/Modal";
 
 const PostModal = ({ data, handleClose }) => {
   return <Modal handleClose={handleClose}></Modal>;

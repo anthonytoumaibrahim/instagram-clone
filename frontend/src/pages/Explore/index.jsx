@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRequest } from "../../core/hooks/useRequest";
 import { toast } from "react-toastify";
 
-import Post from "../Profile/components/Post";
+import UserPosts from "../components/UserPosts";
 
 const Explore = () => {
   const sendRequest = useRequest();
@@ -18,12 +18,9 @@ const Explore = () => {
       });
   }, []);
   return (
-    <section className="posts margin-top">
-      {posts?.map((post) => {
-        const { id, caption, created_at, images } = post;
-        return <Post key={id} post={post} images={images} />;
-      })}
-    </section>
+    <div className="margin-top">
+      <UserPosts posts={posts} />
+    </div>
   );
 };
 

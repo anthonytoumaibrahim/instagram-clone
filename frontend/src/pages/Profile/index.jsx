@@ -9,7 +9,11 @@ import "./styles.css";
 
 // Components
 import AvatarUploader from "./components/AvatarUploader";
-import UserPosts from "./components/UserPosts";
+import UserPosts from "../components/UserPosts";
+
+// Icons
+import { IoMdGrid } from "react-icons/io";
+import { TbUserSquare } from "react-icons/tb";
 
 const Profile = () => {
   const [profile, setProfile] = useState({});
@@ -90,6 +94,14 @@ const Profile = () => {
         </div>
       </section>
 
+      <div className="posts-tabs">
+        <button className="tab-selector active">
+          <IoMdGrid /> Posts
+        </button>
+        <button className="tab-selector">
+          <TbUserSquare /> Tagged
+        </button>
+      </div>
       <UserPosts posts={profile.posts} />
     </>
   );

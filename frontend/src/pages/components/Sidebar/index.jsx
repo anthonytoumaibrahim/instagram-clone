@@ -11,7 +11,12 @@ import Avatar from "../../../components/Avatar";
 import CreatePost from "../CreatePost";
 
 // Icons
-import { FaRegCompass, FaRegSquarePlus, FaPowerOff } from "react-icons/fa6";
+import {
+  FaRegCompass,
+  FaCompass,
+  FaRegSquarePlus,
+  FaPowerOff,
+} from "react-icons/fa6";
 import { PiHouseBold, PiHouseFill } from "react-icons/pi";
 import { FiSearch } from "react-icons/fi";
 
@@ -59,10 +64,24 @@ const Sidebar = () => {
             <FiSearch size={22} className="nav-icon" />
             <span className="nav-label">Search</span>
           </Link>
-          <Link to="/explore">
-            <FaRegCompass size={22} className="nav-icon" />
-            <span className="nav-label">Explore</span>
-          </Link>
+          <NavLink
+            to="/explore"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            {({ isActive, isPending, isTransitioning }) =>
+              isActive ? (
+                <>
+                  <FaCompass size={22} className="nav-icon" />
+                  <span className="nav-label">Explore</span>
+                </>
+              ) : (
+                <>
+                  <FaRegCompass size={22} className="nav-icon" />
+                  <span className="nav-label">Explore</span>
+                </>
+              )
+            }
+          </NavLink>
           <Link to="/" onClick={() => showPostModal(!postModal)}>
             <FaRegSquarePlus size={22} className="nav-icon" />
             <span className="nav-label">Create</span>
