@@ -10,13 +10,10 @@ class FollowController extends Controller
 {
     public function getFeed()
     {
-        $user = User::with('following.posts')->find(Auth::id())->following
-            ->pluck('posts')
-            ->collapse();
-        $posts = $user;
+        $user = User::with('following.posts')->find(Auth::id());
 
         return response()->json([
-            'posts' => $posts
+            'posts' => $user
         ]);
     }
 

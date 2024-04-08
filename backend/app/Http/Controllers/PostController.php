@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\PostComment;
 use App\Models\PostImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +14,42 @@ class PostController extends Controller
     public function getAllPosts(Request $request)
     {
         $limit = $request->limit ?? 10;
-        
+
         $posts = Post::whereNot('user_id', Auth::id())->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->withCount(['likedByUsers', 'comments'])->limit($limit)->get();
 
         return response()->json($posts);
+    }
+
+    public function getComments(Request $request)
+    {
+        $request->validate([
+            'post_id' => 'required|exists:posts,id'
+        ]);
+        $post_id = $request->post_id;
+        $comments = PostComment::where('post_id', $post_id)->get();
+
+        return response()->json([
+            'comments' => $comments
+        ]);
+    }
+
+    public function comment(Request $request)
+    {
+        $request->validate([
+            'post_id' => 'required|exists:posts,id',
+            'comment' => 'required|min:10|max:150'
+        ]);
+
+        $comment = new PostComment();
+        $comment->user_id = Auth::id();
+        $comment->post_id = $request->post_id;
+        $comment->comment = $request->comment;
+        $comment->saveOrFail();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Your comment has been posted successfully.'
+        ]);
     }
 
     public function create(Request $request)

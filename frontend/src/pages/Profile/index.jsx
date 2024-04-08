@@ -4,18 +4,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaLink } from "react-icons/fa6";
 import { useSelector } from "react-redux";
+
 // Styles
 import "./styles.css";
 
 // Components
 import AvatarUploader from "./components/AvatarUploader";
 import UserPosts from "../components/UserPosts";
+import Avatar from "../../components/Avatar";
+import FollowButton from "./components/FollowButton";
 
 // Icons
 import { IoMdGrid } from "react-icons/io";
 import { TbUserSquare } from "react-icons/tb";
-import Avatar from "../../components/Avatar";
-import FollowButton from "./components/FollowButton";
+import { RiImageAddLine } from "react-icons/ri";
 
 const Profile = () => {
   const usernameSelector = useSelector((state) => state.userSlice.username);
@@ -50,7 +52,7 @@ const Profile = () => {
       <section className="profile-info">
         <div className="avatar-uploader">
           {isOwner ? (
-            <AvatarUploader avatar={profile.avatar} />
+            <AvatarUploader />
           ) : (
             <Avatar avatar_url={profile.avatar} size={150} />
           )}
@@ -95,19 +97,20 @@ const Profile = () => {
             </div>
           </div>
 
-          <p className="font-bold">{profile.full_name}</p>
-
           <div className="bio">
-            {profile.bio}
-            {profile.website && (
-              <a
-                className="website-link"
-                href={profile.website}
-                target="_blank"
-              >
-                <FaLink /> {profile.website}
-              </a>
-            )}
+            <p className="font-bold">{profile.full_name}</p>
+            <p>{profile.bio}</p>
+            <p>
+              {profile.website && (
+                <a
+                  className="website-link"
+                  href={profile.website}
+                  target="_blank"
+                >
+                  <FaLink /> {profile.website}
+                </a>
+              )}
+            </p>
           </div>
         </div>
       </section>
@@ -120,7 +123,14 @@ const Profile = () => {
           <TbUserSquare /> Tagged
         </button>
       </div>
-      <UserPosts posts={posts} />
+      {posts.length > 0 ? (
+        <UserPosts posts={posts} />
+      ) : (
+        <div className="no-posts-yet">
+          <RiImageAddLine size={44} />
+          <h3>You don't have any posts yet</h3>
+        </div>
+      )}
     </>
   );
 };

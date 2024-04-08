@@ -1,13 +1,60 @@
+import { useEffect, useState } from "react";
+import { useRequest } from "../../../core/hooks/useRequest";
+import { toast } from "react-toastify";
+
+// Components
 import Modal from "../../../components/Modal";
 import Avatar from "../../../components/Avatar";
+import Button from "../../../components/Button";
+
+// Styles
 import "./styles.css";
 
 // React Carousel
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
+// Icons
+import { FaRegHeart, FaHeart } from "react-icons/fa6";
+
 const PostModal = ({ data, handleClose }) => {
+  const sendRequest = useRequest();
   const { user } = data;
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getComments = async () => {
+    sendRequest("GET", `/comments?post_id=${data.id}`)
+      .then((response) => {
+        const { comments } = response.data;
+        setComments(comments);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const submitComment = async () => {
+    setIsLoading(true);
+    sendRequest("POST", "/comment", {
+      post_id: data.id,
+      comment: comment,
+    })
+      .then((response) => {
+        const { success, message } = response.data;
+        toast.success(message);
+        getComments();
+      })
+      .catch((error) => {
+        toast.error("Sorry, your comment could not be posted.");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    getComments();
+  }, []);
 
   return (
     <Modal handleClose={handleClose}>
@@ -41,7 +88,33 @@ const PostModal = ({ data, handleClose }) => {
               avatar_url={user.avatar}
             />
           </div>
-          <p className="caption">{data.caption}</p>
+          <div className="content-wrapper">
+            <p className="caption">{data.caption}</p>
+          </div>
+
+          <div className="like-and-comment">
+            <div className="post-like">
+              <div className="post-info">
+                <p className="font-bold">{data.liked_by_users_count} likes</p>
+                <p>{new Date(data.created_at).toLocaleDateString("en-GB")}</p>
+              </div>
+              <FaRegHeart size={24} />
+            </div>
+            <div className="comment-form">
+              <textarea
+                placeholder="Write a comment..."
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              ></textarea>
+              <Button
+                loading={isLoading}
+                disabled={comment.length < 10}
+                onClick={submitComment}
+              >
+                Post
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </Modal>

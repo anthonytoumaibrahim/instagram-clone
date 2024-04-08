@@ -27,6 +27,8 @@ Route::middleware(['api', 'auth:api'])->group(function () {
     Route::controller(PostController::class)->group(function () {
         Route::get('/get-posts', 'getAllPosts');
         Route::post('/create-post', 'create');
+        Route::get('/comments', 'getComments');
+        Route::post('/comment', 'comment');
     });
 
     Route::controller(FollowController::class)->group(function () {

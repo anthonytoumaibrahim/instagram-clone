@@ -82,7 +82,7 @@ const Sidebar = () => {
               )
             }
           </NavLink>
-          <Link to="/" onClick={() => showPostModal(!postModal)}>
+          <Link onClick={() => showPostModal(!postModal)}>
             <FaRegSquarePlus size={22} className="nav-icon" />
             <span className="nav-label">Create</span>
           </Link>

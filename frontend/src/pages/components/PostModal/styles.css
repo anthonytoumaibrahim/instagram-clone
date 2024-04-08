@@ -7,8 +7,6 @@
 .post-body .options {
   display: flex;
   flex-direction: column;
-  padding: 14px;
-  gap: 20px;
   width: 100%;
   background: #fff;
   position: relative;
@@ -17,7 +15,39 @@
 
 .post-body .options .avatar-wrapper {
   border-bottom: 1px solid var(--gray-col);
-  padding-bottom: 10px;
+  padding: 14px;
+}
+.post-body .options .content-wrapper {
+  padding: 14px;
+}
+.post-body .like-and-comment {
+  margin-top: auto;
+  border-top: 1px solid var(--gray-col);
+}
+.post-body .post-like {
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.post-body .post-like .post-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.post-body .comment-form {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid var(--gray-col);
+  padding: 14px;
+}
+.post-body .comment-form textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow-y: hidden;
 }
 
 .post-body .uploaded-images {
