@@ -25,6 +25,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import EditProfile from "./pages/EditProfile";
 import Explore from "./pages/Explore";
+import Feed from "./pages/Feed";
 
 const App = () => {
   const tokenSelector = useSelector((state) => state.userSlice.token);
@@ -46,7 +47,7 @@ const App = () => {
       <Routes>
         {tokenSelector ? (
           <Route path="/" element={<UserLayout />}>
-            <Route index element={<>hello</>} />
+            <Route index element={<Feed />} />
             <Route path="profile/:username?" element={<Profile />} />
             <Route path="edit-profile" element={<EditProfile />} />
             <Route path="explore" element={<Explore />} />

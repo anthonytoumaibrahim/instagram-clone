@@ -3,7 +3,7 @@ import Loader from "../Loader";
 const Button = ({
   primary = true,
   loading = false,
-  onClick,
+  onClick = () => {},
   className = "",
   children,
 }) => {
