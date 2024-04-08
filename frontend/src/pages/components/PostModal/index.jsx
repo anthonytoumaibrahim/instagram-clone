@@ -24,6 +24,7 @@ const PostModal = ({ data, handleClose }) => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [likesPost, setLikesPost] = useState(data.liked_by_user);
 
   const getComments = async () => {
     sendRequest("GET", `/comments?post_id=${data.id}`)
@@ -32,6 +33,19 @@ const PostModal = ({ data, handleClose }) => {
         setComments(comments);
       })
       .catch((error) => toast.error("Couldn't get comments for this post..."));
+  };
+
+  const likePost = () => {
+    sendRequest("POST", "/like-post", {
+      post_id: data.id,
+    })
+      .then((response) => {
+        const { success } = response;
+        setLikesPost(!likesPost);
+      })
+      .catch((error) => {
+        toast.error("Sorry, couldn't like post.");
+      });
   };
 
   const submitComment = async () => {
@@ -105,7 +119,11 @@ const PostModal = ({ data, handleClose }) => {
                 <p className="font-bold">{data.liked_by_users_count} likes</p>
                 <p>{new Date(data.created_at).toLocaleDateString("en-GB")}</p>
               </div>
-              <FaRegHeart size={24} />
+              <FaRegHeart
+                size={24}
+                onClick={likePost}
+                className={`${likesPost ? "text-error" : ""}`}
+              />
             </div>
             <div className="comment-form">
               <textarea

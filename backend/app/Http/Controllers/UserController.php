@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\PostLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -18,6 +19,10 @@ class UserController extends Controller
         $user->is_following = Auth::user()->following->find($user->id) ? true : false;
 
         $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->withCount(['likedByUsers', 'comments'])->get();
+        $posts->each(function ($post) {
+            $like = PostLike::where("post_id", $post->id)->where("user_id", Auth::id())->first();
+            $post->liked_by_user = $like ? true : false;
+        });
 
         if ($user) {
             return response()->json([

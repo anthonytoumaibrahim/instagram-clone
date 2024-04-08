@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Models\PostComment;
+use App\Models\User;
+use App\Models\PostLike;
 use App\Models\PostImage;
+use App\Models\PostComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +19,34 @@ class PostController extends Controller
 
         $posts = Post::whereNot('user_id', Auth::id())->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->withCount(['likedByUsers', 'comments'])->limit($limit)->get();
 
+        $posts->each(function ($post) {
+            $like = PostLike::where("post_id", $post->id)->where("user_id", Auth::id())->first();
+            $post->liked_by_user = $like ? true : false;
+        });
+
         return response()->json($posts);
+    }
+
+    public function likePost(Request $request)
+    {
+        $request->validate([
+            'post_id' => 'required|exists:posts,id'
+        ]);
+        $post_id = $request->post_id;
+
+        $user = User::find(Auth::id());
+
+        $like_exists = $user->likedPosts()->find($post_id);
+
+        if ($like_exists) {
+            $user->likedPosts()->detach($post_id);
+        } else {
+            $user->likedPosts()->attach($post_id);
+        }
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     public function getComments(Request $request)
