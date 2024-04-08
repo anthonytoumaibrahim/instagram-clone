@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useRequest } from "../../core/hooks/useRequest";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 import UserPosts from "../components/UserPosts";
 
 const Explore = () => {
+  const dispatch = useDispatch();
   const sendRequest = useRequest();
   const [posts, setPosts] = useState([]);
 
@@ -27,6 +29,10 @@ const Explore = () => {
     sendRequest("GET", "/get-posts?limit=10")
       .then((response) => {
         setPosts(response.data);
+        dispatch({
+          type: "postsSlice/setPosts",
+          payload: response.data,
+        });
       })
       .catch((error) => {
         toast.error("Sorry, something went wrong.");

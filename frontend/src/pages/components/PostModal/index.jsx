@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRequest } from "../../../core/hooks/useRequest";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 // Components
 import Modal from "../../../components/Modal";
@@ -18,8 +19,9 @@ import { Carousel } from "react-responsive-carousel";
 import { FaRegHeart, FaHeart } from "react-icons/fa6";
 import PostComment from "../PostComment";
 
-const PostModal = ({ data, updatePost, handleClose }) => {
+const PostModal = ({ data, handleClose }) => {
   const sendRequest = useRequest();
+  const dispatch = useDispatch();
   const { user } = data;
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
@@ -40,7 +42,10 @@ const PostModal = ({ data, updatePost, handleClose }) => {
     })
       .then((response) => {
         const { success } = response;
-        updatePost(data.id, !data.liked_by_user);
+        dispatch({
+          type: "postsSlice/likePost",
+          payload: data.id,
+        });
       })
       .catch((error) => {
         toast.error("Sorry, couldn't like post.");

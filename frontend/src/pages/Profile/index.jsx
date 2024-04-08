@@ -3,7 +3,7 @@ import { useRequest } from "../../core/hooks/useRequest";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaLink } from "react-icons/fa6";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 // Styles
 import "./styles.css";
@@ -21,6 +21,8 @@ import { RiImageAddLine } from "react-icons/ri";
 
 const Profile = () => {
   const usernameSelector = useSelector((state) => state.userSlice.username);
+  const dispatch = useDispatch();
+
   const [profile, setProfile] = useState({});
   const [posts, setPosts] = useState([]);
   const sendRequest = useRequest();
@@ -35,6 +37,10 @@ const Profile = () => {
         const { profile, posts } = response.data;
         setProfile(profile);
         setPosts(posts);
+        dispatch({
+          type: "postsSlice/setPosts",
+          payload: posts,
+        });
       })
       .catch((error) => {
         // Profile not found
@@ -124,7 +130,7 @@ const Profile = () => {
         </button>
       </div>
       {posts.length > 0 ? (
-        <UserPosts posts={posts} />
+        <UserPosts />
       ) : (
         <div className="no-posts-yet">
           <RiImageAddLine size={44} />
