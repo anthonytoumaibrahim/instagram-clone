@@ -16,6 +16,7 @@ import { Carousel } from "react-responsive-carousel";
 
 // Icons
 import { FaRegHeart, FaHeart } from "react-icons/fa6";
+import PostComment from "../PostComment";
 
 const PostModal = ({ data, handleClose }) => {
   const sendRequest = useRequest();
@@ -30,7 +31,7 @@ const PostModal = ({ data, handleClose }) => {
         const { comments } = response.data;
         setComments(comments);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => toast.error("Couldn't get comments for this post..."));
   };
 
   const submitComment = async () => {
@@ -90,6 +91,12 @@ const PostModal = ({ data, handleClose }) => {
           </div>
           <div className="content-wrapper">
             <p className="caption">{data.caption}</p>
+          </div>
+
+          <div className="comments-wrapper">
+            {comments.map((comment) => (
+              <PostComment key={comment.id} data={comment} />
+            ))}
           </div>
 
           <div className="like-and-comment">

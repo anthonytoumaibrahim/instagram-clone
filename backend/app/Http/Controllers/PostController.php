@@ -26,7 +26,7 @@ class PostController extends Controller
             'post_id' => 'required|exists:posts,id'
         ]);
         $post_id = $request->post_id;
-        $comments = PostComment::where('post_id', $post_id)->get();
+        $comments = PostComment::where('post_id', $post_id)->with('user:id,username,avatar')->get();
 
         return response()->json([
             'comments' => $comments

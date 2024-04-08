@@ -1,0 +1,9 @@
+.comments-wrapper .comment {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.comments-wrapper .comment .date {
+  font-size: var(--font-size-sm);
+  color: var(--gray-dark-col);
+}
