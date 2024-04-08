@@ -13,7 +13,7 @@ class UserController extends Controller
     public function getProfile($username = null)
     {
         $username = $username ?? Auth::user()->username;
-        $user = User::where('username', $username)->select('id', 'full_name', 'username', 'avatar', 'bio', 'website')->with('posts.images')->first();
+        $user = User::where('username', $username)->select('id', 'full_name', 'username', 'avatar', 'bio', 'website')->with('posts.images', 'posts.user:id,username,avatar')->first();
 
         if ($user) {
             return response()->json([
