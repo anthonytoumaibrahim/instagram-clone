@@ -62,6 +62,7 @@ const PostModal = ({ data, handleClose }) => {
         const { success, message } = response.data;
         toast.success(message);
         getComments();
+        setComment("");
       })
       .catch((error) => {
         toast.error("Sorry, your comment could not be posted.");
