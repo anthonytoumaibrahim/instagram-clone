@@ -1,10 +1,17 @@
 import Loader from "../Loader";
 
-const Button = ({ primary = true, loading = false, className, children }) => {
+const Button = ({
+  primary = true,
+  loading = false,
+  onClick,
+  className,
+  children,
+}) => {
   return (
     <button
       className={`button ${primary ? "button-primary" : ""} ${className}`}
       disabled={loading}
+      onClick={() => onClick()}
     >
       {loading ? <Loader width={19} /> : children}
     </button>

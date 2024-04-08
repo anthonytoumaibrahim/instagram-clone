@@ -15,6 +15,7 @@ import UserPosts from "../components/UserPosts";
 import { IoMdGrid } from "react-icons/io";
 import { TbUserSquare } from "react-icons/tb";
 import Avatar from "../../components/Avatar";
+import FollowButton from "./components/FollowButton";
 
 const Profile = () => {
   const usernameSelector = useSelector((state) => state.userSlice.username);
@@ -22,6 +23,8 @@ const Profile = () => {
   const sendRequest = useRequest();
   const navigate = useNavigate();
   const { username } = useParams();
+
+  const isOwner = usernameSelector === username || !username;
 
   const getProfile = () => {
     sendRequest("GET", `/profile${username ? `/${username}` : ""}`)
@@ -44,7 +47,7 @@ const Profile = () => {
     <>
       <section className="profile-info">
         <div className="avatar-uploader">
-          {usernameSelector === username || !username ? (
+          {isOwner ? (
             <AvatarUploader avatar={profile.avatar} />
           ) : (
             <Avatar avatar_url={profile.avatar} size={150} />
@@ -54,13 +57,18 @@ const Profile = () => {
         <div className="info-wrapper">
           <div className="username">
             <h3>{profile.username}</h3>
-            {(usernameSelector === username || !username) && (
+            {isOwner && (
               <button
                 className="button button-muted"
                 onClick={() => navigate("/edit-profile")}
               >
                 Edit profile
               </button>
+            )}
+            {!isOwner && (
+              <>
+                <FollowButton id={profile.id} />
+              </>
             )}
           </div>
 
