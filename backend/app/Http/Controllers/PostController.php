@@ -17,13 +17,14 @@ class PostController extends Controller
     {
         $limit = $request->limit ?? 10;
 
-        $posts = Post::whereNot('user_id', Auth::id())->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->withCount(['likedByUsers', 'comments'])->limit($limit)->get();
+        $followers = User::find(Auth::id())->following->pluck('id');
+
+        $posts = Post::whereNotIn('user_id', $followers->push(Auth::id()))->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->withCount(['likedByUsers', 'comments'])->limit($limit)->get();
 
         $posts->each(function ($post) {
             $like = PostLike::where("post_id", $post->id)->where("user_id", Auth::id())->first();
             $post->liked_by_user = $like ? true : false;
         });
-
         return response()->json($posts);
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,10 +11,12 @@ class FollowController extends Controller
 {
     public function getFeed()
     {
-        $user = User::with('following.posts')->find(Auth::id());
+        $following = User::find(Auth::id())->following->pluck('id');
+
+        $posts = Post::whereIn('user_id', $following)->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->withCount(['likedByUsers', 'comments'])->get();
 
         return response()->json([
-            'posts' => $user
+            'posts' => $posts
         ]);
     }
 
