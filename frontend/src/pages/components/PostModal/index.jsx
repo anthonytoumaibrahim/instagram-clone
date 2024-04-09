@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRequest } from "../../../core/hooks/useRequest";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import TimeAgo from "react-timeago";
 
 // Components
 import Modal from "../../../components/Modal";
@@ -131,7 +132,9 @@ const PostModal = ({ data, handleClose }) => {
             <div className="post-like">
               <div className="post-info">
                 <p className="font-bold">{data.liked_by_users_count} likes</p>
-                <p>{new Date(data.created_at).toLocaleDateString("en-GB")}</p>
+                <p>
+                  <TimeAgo date={data.created_at} />
+                </p>
               </div>
               {data.liked_by_user ? (
                 <FaHeart size={24} onClick={likePost} className="text-error" />

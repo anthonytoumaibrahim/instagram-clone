@@ -1,3 +1,4 @@
+import TimeAgo from "react-timeago";
 import Avatar from "../../../components/Avatar";
 
 import "./styles.css";
@@ -10,7 +11,7 @@ const PostComment = ({ data }) => {
       <div className="avatar-date-wrapper">
         <Avatar avatar_url={user.avatar} username={user.username} />
         <p className="date">
-          {new Date(data.created_at).toLocaleDateString("en-GB")}
+          <TimeAgo date={data.created_at} />
         </p>
       </div>
       <p>{comment}</p>
