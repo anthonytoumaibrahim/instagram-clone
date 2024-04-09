@@ -26,6 +26,19 @@ class FollowController extends Controller
         ]);
     }
 
+    public function getRecommendedUsers()
+    {
+        $user = Auth::user();
+        $following = $user->following->pluck('id');
+
+        $depth1 = User::whereIn('id', $following)->pluck('id');
+        $depth2 = User::whereIn('id', $depth1)->pluck('id');
+
+        return response()->json([
+            'recommended' => $following->merge($depth1)->merge($depth2)
+        ]);
+    }
+
     public function follow(Request $request)
     {
         $request->validate([

@@ -33,6 +33,11 @@
   font-weight: 500;
   color: #000;
 }
+.posts-full .post-likes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .posts .post:hover::after,
 .posts .post:hover .likes-and-comments {
   opacity: 1;

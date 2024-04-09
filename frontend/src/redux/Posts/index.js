@@ -9,6 +9,12 @@ export const postsSlice = createSlice({
     setPosts: (state, action) => {
       return action.payload;
     },
+    addPost: (state, action) => {
+      return [
+        ...state,
+        action.payload
+      ]
+    },
     likePost: (state, action) => {
       const id = action.payload;
       return state.map((post) => {
