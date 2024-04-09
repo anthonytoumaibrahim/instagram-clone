@@ -28,22 +28,32 @@ class FollowController extends Controller
 
     public function getRecommendedUsers()
     {
-        $user = Auth::user();
-        $followingUsers = $user->following;
-        $followingIds = $user->following->pluck('id');
+        $user = User::find(Auth::id());
 
-        $depthFollowings = collect();
+        $followingIds = $user->following->pluck('id')->toArray();
 
-        $followingUsers->each(function ($user) use ($depthFollowings) {
-            $followings = $user->following;
-            $depthFollowings->push($followings->pluck('id'));
-        });
-        
-        // https://laravel.com/docs/11.x/collections#method-flatten
-        $flattened = $depthFollowings->flatten()->unique()->whereNotIn(null, $followingIds);
+        $recommendedUsers = User::whereIn('id', function ($query) use ($followingIds) {
+            $query->select('following_id')
+                ->from('followers')
+                ->whereIn('follower_id', $followingIds);
+
+            $query->orWhereIn('follower_id', function ($query) use ($followingIds) {
+                $query->select('following_id')
+                    ->from('followers')
+                    ->whereIn('follower_id', $followingIds);
+            });
+        })->whereNotIn('id', $followingIds)->whereNot('id', Auth::id())->limit(5)->get();
+
+        // Show random users to follow if the user
+        // doesn't already follow anyone
+        if ($recommendedUsers->count() === 0) {
+            return [
+                'recommended' => User::whereNot('id', Auth::id())->whereNotIn('id', $followingIds)->limit(5)->get()
+            ];
+        }
 
         return response()->json([
-            'recommended' => $flattened
+            'recommended' => $recommendedUsers
         ]);
     }
 
