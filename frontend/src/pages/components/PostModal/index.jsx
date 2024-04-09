@@ -8,6 +8,7 @@ import TimeAgo from "react-timeago";
 import Modal from "../../../components/Modal";
 import Avatar from "../../../components/Avatar";
 import Button from "../../../components/Button";
+import Loader from "../../../components/Loader";
 
 // Styles
 import "./styles.css";
@@ -27,6 +28,7 @@ const PostModal = ({ data, handleClose }) => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLikeLoading, setIsLikeLoading] = useState(false);
 
   const getComments = async () => {
     sendRequest("GET", `/comments?post_id=${data.id}`)
@@ -62,6 +64,7 @@ const PostModal = ({ data, handleClose }) => {
   };
 
   const likePost = () => {
+    setIsLikeLoading(true);
     sendRequest("POST", "/like-post", {
       post_id: data.id,
     })
@@ -74,7 +77,8 @@ const PostModal = ({ data, handleClose }) => {
       })
       .catch((error) => {
         toast.error("Sorry, couldn't like post.");
-      });
+      })
+      .finally(() => setIsLikeLoading(false));
   };
 
   useEffect(() => {
@@ -136,7 +140,9 @@ const PostModal = ({ data, handleClose }) => {
                   <TimeAgo date={data.created_at} />
                 </p>
               </div>
-              {data.liked_by_user ? (
+              {isLikeLoading ? (
+                <Loader width={24} />
+              ) : data.liked_by_user ? (
                 <FaHeart size={24} onClick={likePost} className="text-error" />
               ) : (
                 <FaRegHeart size={24} onClick={likePost} />

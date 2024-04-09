@@ -1,4 +1,3 @@
-// React stuff
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useRequest } from "../../../core/hooks/useRequest";
@@ -13,6 +12,7 @@ import { FaHeart, FaRegHeart, FaComments } from "react-icons/fa6";
 import { BsImages } from "react-icons/bs";
 
 // Components
+import Loader from "../../../components/Loader";
 import PostModal from "../PostModal";
 import Avatar from "../../../components/Avatar";
 
@@ -20,8 +20,10 @@ const Post = ({ post, images, fullForm = false }) => {
   const [showPost, setShowPost] = useState(false);
   const sendRequest = useRequest();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const likePost = () => {
+    setIsLoading(true);
     sendRequest("POST", "/like-post", {
       post_id: post.id,
     })
@@ -34,7 +36,8 @@ const Post = ({ post, images, fullForm = false }) => {
       })
       .catch((error) => {
         toast.error("Sorry, couldn't like post.");
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
   return (
     <>
@@ -62,11 +65,13 @@ const Post = ({ post, images, fullForm = false }) => {
 
           <div className="post-footer">
             <p className="post-likes cursor-pointer" onClick={likePost}>
-              {post.liked_by_user ? (
+              {isLoading ? (
+                <Loader width={24} />
+              ) : post.liked_by_user ? (
                 <FaHeart size={24} className="text-error" />
               ) : (
                 <FaRegHeart size={24} />
-              )}{" "}
+              )}
               {post.liked_by_users_count} likes
             </p>
             <div className="post-caption">
