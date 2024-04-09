@@ -94,12 +94,16 @@ const Sidebar = () => {
             {({ isActive, isPending, isTransitioning }) =>
               isActive ? (
                 <>
-                  <Avatar size={22} className="nav-icon avatar-active" />
+                  <Avatar
+                    size={22}
+                    className="nav-icon avatar-active"
+                    is_owner={true}
+                  />
                   <span className="nav-label">Profile</span>
                 </>
               ) : (
                 <>
-                  <Avatar size={22} className="nav-icon" />
+                  <Avatar size={22} className="nav-icon" is_owner={true} />
                   <span className="nav-label">Profile</span>
                 </>
               )

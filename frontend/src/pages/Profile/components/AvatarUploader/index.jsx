@@ -41,6 +41,7 @@ const AvatarUploader = ({ avatar }) => {
         avatar_url={avatar}
         size={150}
         className="cursor-pointer"
+        is_owner={true}
         onClick={() => inputRef.current.click()}
       />
       <input
