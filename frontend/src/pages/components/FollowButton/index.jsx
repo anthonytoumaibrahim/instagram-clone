@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Button from "../../../../components/Button";
+import Button from "../../../components/Button";
 import { toast } from "react-toastify";
-import { useRequest } from "../../../../core/hooks/useRequest";
+import { useRequest } from "../../../core/hooks/useRequest";
 
 const FollowButton = ({ id, is_following = false, handleFollow }) => {
   const sendRequest = useRequest();

@@ -87,7 +87,7 @@ const PostModal = ({ data, handleClose }) => {
           {data.images.length > 1 ? (
             <Carousel
               swipeable={true}
-              showArrows={false}
+              showArrows={true}
               showStatus={false}
               showThumbs={false}
             >

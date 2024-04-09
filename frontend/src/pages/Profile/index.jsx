@@ -12,7 +12,7 @@ import "./styles.css";
 import AvatarUploader from "./components/AvatarUploader";
 import UserPosts from "../components/UserPosts";
 import Avatar from "../../components/Avatar";
-import FollowButton from "./components/FollowButton";
+import FollowButton from "../components/FollowButton";
 
 // Icons
 import { IoMdGrid } from "react-icons/io";

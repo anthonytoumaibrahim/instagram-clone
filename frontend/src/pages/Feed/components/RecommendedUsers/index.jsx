@@ -3,7 +3,7 @@ import { useRequest } from "../../../../core/hooks/useRequest";
 
 import "./styles.css";
 import Avatar from "../../../../components/Avatar";
-import FollowButton from "../../../Profile/components/FollowButton";
+import FollowButton from "../../../components/FollowButton";
 
 const RecommendedUsers = ({ updatePosts }) => {
   const sendRequest = useRequest();
