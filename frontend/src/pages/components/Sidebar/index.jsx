@@ -60,10 +60,6 @@ const Sidebar = () => {
               )
             }
           </NavLink>
-          <Link to="/search">
-            <FiSearch size={22} className="nav-icon" />
-            <span className="nav-label">Search</span>
-          </Link>
           <NavLink
             to="/explore"
             className={({ isActive }) => (isActive ? "active" : "")}

@@ -1,0 +1,7 @@
+.feed-wrapper {
+  width: 100%;
+  display: flex;
+}
+.feed-posts {
+  flex-grow: 1;
+}

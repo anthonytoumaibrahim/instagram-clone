@@ -32,7 +32,7 @@ class FollowController extends Controller
 
         $followingIds = $user->following->pluck('id')->toArray();
 
-        $recommendedUsers = User::whereIn('id', function ($query) use ($followingIds) {
+        $recommendedUsers = User::select('id', 'username', 'avatar')->whereIn('id', function ($query) use ($followingIds) {
             $query->select('following_id')
                 ->from('followers')
                 ->whereIn('follower_id', $followingIds);
