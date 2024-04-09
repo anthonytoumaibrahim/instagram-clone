@@ -29,13 +29,21 @@ class FollowController extends Controller
     public function getRecommendedUsers()
     {
         $user = Auth::user();
-        $following = $user->following->pluck('id');
+        $followingUsers = $user->following;
+        $followingIds = $user->following->pluck('id');
 
-        $depth1 = User::whereIn('id', $following)->pluck('id');
-        $depth2 = User::whereIn('id', $depth1)->pluck('id');
+        $depthFollowings = collect();
+
+        $followingUsers->each(function ($user) use ($depthFollowings) {
+            $followings = $user->following;
+            $depthFollowings->push($followings->pluck('id'));
+        });
+        
+        // https://laravel.com/docs/11.x/collections#method-flatten
+        $flattened = $depthFollowings->flatten()->unique()->whereNotIn(null, $followingIds);
 
         return response()->json([
-            'recommended' => $following->merge($depth1)->merge($depth2)
+            'recommended' => $flattened
         ]);
     }
 
