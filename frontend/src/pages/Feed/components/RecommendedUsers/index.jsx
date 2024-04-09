@@ -5,7 +5,7 @@ import "./styles.css";
 import Avatar from "../../../../components/Avatar";
 import FollowButton from "../../../Profile/components/FollowButton";
 
-const RecommendedUsers = () => {
+const RecommendedUsers = ({ updatePosts }) => {
   const sendRequest = useRequest();
   const [users, setUsers] = useState([]);
 
@@ -18,9 +18,10 @@ const RecommendedUsers = () => {
       .catch((error) => {});
   };
 
-  const removeUser = (id) => {
+  const handleFollow = (id) => {
     const newUsers = users.filter((user) => user.id !== id);
     setUsers(newUsers);
+    updatePosts();
   };
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const RecommendedUsers = () => {
         return (
           <div className="recommended-user" key={id}>
             <Avatar avatar_url={avatar} username={username} size={44} />
-            <FollowButton id={id} handleFollow={() => removeUser(id)} />
+            <FollowButton id={id} handleFollow={() => handleFollow(id)} />
           </div>
         );
       })}

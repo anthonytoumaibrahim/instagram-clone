@@ -15,7 +15,7 @@ const Feed = () => {
   const sendRequest = useRequest();
   const [postsCount, setPostsCount] = useState(0);
 
-  useEffect(() => {
+  const getFeedPosts = () => {
     sendRequest("GET", "/feed")
       .then((response) => {
         const { posts } = response.data;
@@ -28,6 +28,10 @@ const Feed = () => {
       .catch((error) => {
         toast.error("Sorry, something went wrong.");
       });
+  };
+
+  useEffect(() => {
+    getFeedPosts();
   }, []);
 
   return (
@@ -49,7 +53,7 @@ const Feed = () => {
           <UserPosts fullForm={true} />
         )}
       </div>
-      <RecommendedUsers />
+      <RecommendedUsers updatePosts={getFeedPosts} />
     </div>
   );
 };

@@ -1,7 +1,17 @@
 .feed-wrapper {
   width: 100%;
   display: flex;
+  gap: 20px;
 }
 .feed-posts {
   flex-grow: 1;
+}
+
+@media (max-width: 768px) {
+  .feed-wrapper {
+    flex-direction: column;
+  }
+  .feed-posts {
+    order: 2;
+  }
 }
