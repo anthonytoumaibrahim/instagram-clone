@@ -24,7 +24,19 @@ export const postsSlice = createSlice({
           : post;
       });
     },
+    addComment: (state, action) => {
+      const id = action.payload;
+      return state.map((post) => {
+        const { comments_count } = post;
+        return post.id === id
+          ? {
+              ...post,
+              comments_count: comments_count + 1,
+            }
+          : post;
+      });
+    },
   },
 });
 
-export const { setPosts } = postsSlice.actions;
+export const { setPosts, likePost, addComment } = postsSlice.actions;

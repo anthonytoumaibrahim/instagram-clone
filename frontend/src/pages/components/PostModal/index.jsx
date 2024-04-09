@@ -36,6 +36,30 @@ const PostModal = ({ data, handleClose }) => {
       .catch((error) => toast.error("Couldn't get comments for this post..."));
   };
 
+  const submitComment = async () => {
+    setIsLoading(true);
+    sendRequest("POST", "/comment", {
+      post_id: data.id,
+      comment: comment,
+    })
+      .then((response) => {
+        const { success, message, comment } = response.data;
+        toast.success(message);
+        setComment("");
+        setComments([...comments, comment]);
+        dispatch({
+          type: "postsSlice/addComment",
+          payload: data.id,
+        });
+      })
+      .catch((error) => {
+        toast.error("Sorry, your comment could not be posted.");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   const likePost = () => {
     sendRequest("POST", "/like-post", {
       post_id: data.id,
@@ -49,26 +73,6 @@ const PostModal = ({ data, handleClose }) => {
       })
       .catch((error) => {
         toast.error("Sorry, couldn't like post.");
-      });
-  };
-
-  const submitComment = async () => {
-    setIsLoading(true);
-    sendRequest("POST", "/comment", {
-      post_id: data.id,
-      comment: comment,
-    })
-      .then((response) => {
-        const { success, message } = response.data;
-        toast.success(message);
-        getComments();
-        setComment("");
-      })
-      .catch((error) => {
-        toast.error("Sorry, your comment could not be posted.");
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   };
 

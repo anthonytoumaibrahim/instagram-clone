@@ -78,7 +78,8 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Your comment has been posted successfully.'
+            'message' => 'Your comment has been posted successfully.',
+            'comment' => $comment->with('user:id,username,avatar')->find($comment->id)
         ]);
     }
 

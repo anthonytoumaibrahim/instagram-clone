@@ -21,6 +21,8 @@ const Avatar = ({
   const avatarSelector = useSelector((state) => state.userSlice);
   const url = is_owner
     ? avatarSelector.avatar
+      ? avatarSelector.avatar
+      : default_avatar
     : avatar_url
     ? avatar_url
     : default_avatar;
