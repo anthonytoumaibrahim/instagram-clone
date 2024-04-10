@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
-use App\Models\PostLike;
 use App\Models\PostImage;
 use App\Models\PostComment;
 use Illuminate\Http\Request;

@@ -43,7 +43,6 @@ class Post extends Model
 
     public function getLikedByUserAttribute()
     {
-        $like = PostLike::where("post_id", $this->id)->where("user_id", Auth::id())->first();
-        return $like ? true : false;
+        return $this->likedByUsers->contains('id', Auth::id());
     }
 }
