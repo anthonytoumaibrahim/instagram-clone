@@ -18,6 +18,7 @@
 
 @media (max-width: 768px) {
   .recommended-users {
+    position: static;
     width: 100%;
   }
 }
