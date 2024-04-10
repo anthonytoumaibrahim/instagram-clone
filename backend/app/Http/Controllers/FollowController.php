@@ -20,7 +20,7 @@ class FollowController extends Controller
             })->map(function ($follower) {
                 $follower->is_following = Auth::user()->following->contains('id', $follower->id);
                 return $follower;
-            });
+            })->flatten();
         } else {
             $followers = $user->following->reject(function ($following) {
                 return $following->id === Auth::id();
