@@ -13,7 +13,7 @@ import AvatarUploader from "./components/AvatarUploader";
 import UserPosts from "../components/UserPosts";
 import Avatar from "../../components/Avatar";
 import FollowButton from "../components/FollowButton";
-import Modal from "../../components/Modal";
+import FollowersModal from "./components/FollowersModal";
 
 // Icons
 import { IoMdGrid } from "react-icons/io";
@@ -23,13 +23,13 @@ import { FcRemoveImage } from "react-icons/fc";
 const Profile = () => {
   const usernameSelector = useSelector((state) => state.userSlice.username);
   const dispatch = useDispatch();
+  const sendRequest = useRequest();
+  const navigate = useNavigate();
+  const { username } = useParams();
 
   const [profile, setProfile] = useState({});
   const [posts, setPosts] = useState([]);
   const [followersModal, showFollowersModal] = useState(false);
-  const sendRequest = useRequest();
-  const navigate = useNavigate();
-  const { username } = useParams();
 
   const isOwner = usernameSelector === username || !username;
 
@@ -57,19 +57,12 @@ const Profile = () => {
 
   return (
     <>
-      {/* {followersModal && (
-        <Modal width={340} handleClose={() => showFollowersModal(false)}>
-          {profile.followers.map((follower) => {
-            const { id, username, avatar } = follower;
-
-            return (
-              <div className="follower-wrapper" key={id}>
-                <Avatar username={username} avatar_url={avatar} />
-              </div>
-            );
-          })}
-        </Modal>
-      )} */}
+      {followersModal && (
+        <FollowersModal
+          id={profile.id}
+          handleClose={() => showFollowersModal(false)}
+        />
+      )}
       <section className="profile-info">
         <div className="avatar-uploader">
           {isOwner ? (

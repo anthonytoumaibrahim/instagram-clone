@@ -3,7 +3,10 @@ import "./styles.css";
 
 const Loader = ({ width = 50 }) => {
   return (
-    <div className="loader-spinning" style={{ width: `${width}px` }}></div>
+    <div
+      className="loader-spinning"
+      style={{ width: `${width}px`, height: `${width}px` }}
+    ></div>
   );
 };
 

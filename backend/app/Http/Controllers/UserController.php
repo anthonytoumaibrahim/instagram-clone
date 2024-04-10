@@ -14,9 +14,16 @@ class UserController extends Controller
     public function getProfile($username = null)
     {
         $username = $username ?? Auth::user()->username;
-        $user = User::where('username', $username)->select('id', 'full_name', 'username', 'avatar', 'bio', 'website')->withCount(['followers', 'following', 'posts'])->with(['followers:id,username,avatar', 'following:id,username,avatar'])->first();
+        $user = User::where('username', $username)->select('id', 'full_name', 'username', 'avatar', 'bio', 'website')->withCount(['followers', 'following', 'posts'])->first();
 
-        $user->is_following = Auth::user()->following->find($user->id) ? true : false;
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Profile not found.'
+            ], 422);
+        }
+
+        $user->is_following = Auth::user()->following->contains('id', $user->id);
 
         $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->withCount(['likedByUsers', 'comments'])->get();
         $posts->each(function ($post) {
@@ -24,17 +31,10 @@ class UserController extends Controller
             $post->liked_by_user = $like ? true : false;
         });
 
-        if ($user) {
-            return response()->json([
-                'profile' => $user,
-                'posts' => $posts
-            ]);
-        }
-
         return response()->json([
-            'success' => false,
-            'message' => 'Profile not found.'
-        ], 422);
+            'profile' => $user,
+            'posts' => $posts
+        ]);
     }
 
     public function getProfileSettings()

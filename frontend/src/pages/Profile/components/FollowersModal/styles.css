@@ -1,0 +1,13 @@
+.followers-modal-content .loader-spinning {
+  margin: auto;
+}
+.followers-modal-content {
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+.followers-modal-content .follower-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

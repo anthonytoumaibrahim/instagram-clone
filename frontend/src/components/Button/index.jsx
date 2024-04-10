@@ -3,7 +3,7 @@ import Loader from "../Loader";
 const Button = ({
   primary = true,
   loading = false,
-  disabled = false,
+  disabled = null,
   onClick = () => {},
   className = "",
   children,
@@ -15,7 +15,7 @@ const Button = ({
       } ${className}`}
       disabled={loading}
       onClick={() => onClick()}
-      disabled={disabled}
+      disabled={disabled ? disabled : loading}
     >
       {loading ? <Loader width={19} /> : children}
     </button>

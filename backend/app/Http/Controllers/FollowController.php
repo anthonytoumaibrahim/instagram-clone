@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowController extends Controller
 {
-    public function getFollowers()
+    public function getFollowers($id = null)
     {
-        $user = User::with(['followers:id,username,avatar', 'following:id'])->find(Auth::id());
+        $user = User::with(['followers:id,username,avatar', 'following:id'])->findOrFail($id ? $id : Auth::id());
 
-        $followers = $user->followers->map(function ($follower) use ($user) {
-            $follower->is_following_back = $user->following->contains('id', $follower->id);
+        $followers = $user->followers->reject(function ($follower) {
+            return $follower->id === Auth::id();
+        })->map(function ($follower) {
+            $follower->is_following_back = Auth::user()->following->contains('id', $follower->id);
             return $follower;
         });
 

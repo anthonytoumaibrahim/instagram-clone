@@ -18,7 +18,7 @@ const Modal = forwardRef((props, ref) => {
       <div className="body" style={{ width: props.width ?? null }}>
         {props.title && <div className="title">{props.title}</div>}
         <div
-          className="content"
+          className={`content ${props.className ? props.className : ""}`}
           onDragOver={props.onDragOver}
           onDragLeave={props.onDragLeave}
           onDrop={props.onDrop}
