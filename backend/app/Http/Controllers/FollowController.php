@@ -10,24 +10,38 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowController extends Controller
 {
+
+    /**
+     * getFollowers - Returns the followers or followings of a user
+     *
+     * @param  mixed $id
+     * @param  mixed $type
+     * @return string
+     */
     public function getFollowers($id = null, $type = "followers")
     {
         $user = User::with(['followers:id,username,avatar', 'following:id,username,avatar'])->findOrFail($id ? $id : Auth::id());
 
         if ($type === "followers") {
-            $followers = $user->followers->reject(function ($follower) {
-                return $follower->id === Auth::id();
-            })->map(function ($follower) {
-                $follower->is_following = Auth::user()->following->contains('id', $follower->id);
-                return $follower;
-            })->flatten();
+            $followers = $user->followers
+                ->reject(function ($follower) {
+                    return $follower->id === Auth::id();
+                })
+                ->map(function ($follower) {
+                    $follower->is_following = Auth::user()->following->contains('id', $follower->id);
+                    return $follower;
+                })
+                ->flatten();
         } else {
-            $followers = $user->following->reject(function ($following) {
-                return $following->id === Auth::id();
-            })->map(function ($following) {
-                $following->is_following = Auth::user()->following->contains('id', $following->id);
-                return $following;
-            });
+            $followers = $user->following
+                ->reject(function ($following) {
+                    return $following->id === Auth::id();
+                })
+                ->map(function ($following) {
+                    $following->is_following = Auth::user()->following->contains('id', $following->id);
+                    return $following;
+                })
+                ->flatten();
         }
 
 
@@ -37,11 +51,19 @@ class FollowController extends Controller
         ]);
     }
 
+    /**
+     * getFeed - Returns the posts on the Feed (Home) page
+     *
+     * @return string
+     */
     public function getFeed()
     {
         $following = User::find(Auth::id())->following->pluck('id');
 
-        $posts = Post::whereIn('user_id', $following)->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->withCount(['likedByUsers', 'comments'])->get();
+        $posts = Post::whereIn('user_id', $following)
+            ->orderBy('created_at', 'DESC')
+            ->with('images', 'user:id,username,avatar')
+            ->withCount(['likedByUsers', 'comments'])->get();
 
         $posts->each(function ($post) {
             $like = PostLike::where("post_id", $post->id)->where("user_id", Auth::id())->first();
@@ -53,6 +75,11 @@ class FollowController extends Controller
         ]);
     }
 
+    /**
+     * getRecommendedUsers
+     *
+     * @return string
+     */
     public function getRecommendedUsers()
     {
         $user = User::find(Auth::id());
@@ -74,9 +101,9 @@ class FollowController extends Controller
         // Show random users to follow if the user
         // doesn't already follow anyone
         if ($recommendedUsers->count() === 0) {
-            return [
+            return response()->json([
                 'recommended' => User::whereNot('id', Auth::id())->whereNotIn('id', $followingIds)->limit(5)->get()
-            ];
+            ]);
         }
 
         return response()->json([

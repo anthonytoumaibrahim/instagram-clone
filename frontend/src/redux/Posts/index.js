@@ -10,10 +10,7 @@ export const postsSlice = createSlice({
       return action.payload;
     },
     addPost: (state, action) => {
-      return [
-        ...state,
-        action.payload
-      ]
+      return [action.payload, ...state];
     },
     likePost: (state, action) => {
       const id = action.payload;

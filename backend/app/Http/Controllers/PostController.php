@@ -117,7 +117,8 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Your post has been created successfully!'
+            'message' => 'Your post has been created successfully!',
+            'post' => Post::with('images', 'user:id,username,avatar')->withCount(['likedByUsers', 'comments'])->find($newPost->id)
         ]);
     }
 }

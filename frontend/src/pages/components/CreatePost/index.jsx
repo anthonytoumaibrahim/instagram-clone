@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useRequest } from "../../../core/hooks/useRequest";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 import Modal from "../../../components/Modal";
 
 // Styles
@@ -12,6 +13,7 @@ import { GoArrowLeft } from "react-icons/go";
 import Avatar from "../../../components/Avatar";
 
 const CreatePost = ({ handleClose = () => {} }) => {
+  const dispatch = useDispatch();
   const sendRequest = useRequest();
   const [stage, setStage] = useState("upload");
   const inputRef = useRef(null);
@@ -33,9 +35,13 @@ const CreatePost = ({ handleClose = () => {} }) => {
 
     sendRequest("POST", "/create-post", form)
       .then((response) => {
-        const { success, message } = response.data;
+        const { success, message, post } = response.data;
         if (success) {
           toast.success(message);
+          dispatch({
+            type: "postsSlice/addPost",
+            payload: post,
+          });
           handleClose();
         }
       })
@@ -62,7 +68,7 @@ const CreatePost = ({ handleClose = () => {} }) => {
     ];
     let validatedFiles = [];
     for (let i = 0; i < files.length; i++) {
-      if(i === UPLOAD_LIMIT) {
+      if (i === UPLOAD_LIMIT) {
         break;
       }
       const type = files[i].type;

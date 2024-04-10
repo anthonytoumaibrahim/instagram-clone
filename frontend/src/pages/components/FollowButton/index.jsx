@@ -7,9 +7,9 @@ const FollowButton = ({ id, is_following = false, handleFollow }) => {
   const sendRequest = useRequest();
   const [isLoading, setIsLoading] = useState(false);
 
-  const follow = () => {
+  const follow = async () => {
     setIsLoading(true);
-    sendRequest("POST", "/follow", {
+    await sendRequest("POST", "/follow", {
       id: id,
     })
       .then((response) => {})

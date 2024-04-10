@@ -1,6 +1,6 @@
 // React stuff
 import { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 // Logo
@@ -26,6 +26,7 @@ import "./styles.css";
 const Sidebar = () => {
   const dispatch = useDispatch();
   const [postModal, showPostModal] = useState(false);
+  const location = useLocation();
 
   const logout = () => {
     dispatch({
@@ -34,7 +35,7 @@ const Sidebar = () => {
   };
   return (
     <>
-      {postModal && (
+      {postModal && location.pathname === "/profile" && (
         <CreatePost handleClose={() => showPostModal(!postModal)} />
       )}
       <aside className="sidebar">

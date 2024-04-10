@@ -16,8 +16,8 @@ const FollowersModal = ({ id = null, type = "followers", handleClose }) => {
   const [followers, setFollowers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getFollowers = () => {
-    sendRequest("GET", `/followers${id ? `/${id}/${type}` : ""}`)
+  const getFollowers = async () => {
+    await sendRequest("GET", `/followers${id ? `/${id}/${type}` : ""}`)
       .then((response) => {
         const { followers } = response.data;
         setFollowers(followers);
@@ -51,6 +51,7 @@ const FollowersModal = ({ id = null, type = "followers", handleClose }) => {
       width={340}
       handleClose={handleClose}
     >
+      <h3>{type === "followers" ? "Followers" : "Following"}</h3>
       {isLoading && <Loader width={54} />}
       {followers.map((follower) => {
         const { id, username, avatar, is_following } = follower;
@@ -66,6 +67,7 @@ const FollowersModal = ({ id = null, type = "followers", handleClose }) => {
           </div>
         );
       })}
+      {!isLoading && followers.length === 0 && <p>No followers to show.</p>}
     </Modal>
   );
 };
