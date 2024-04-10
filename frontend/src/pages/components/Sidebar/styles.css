@@ -70,3 +70,9 @@
     display: none;
   }
 }
+
+@media (max-width: 768px) {
+  .sidebar {
+    padding: 4px;
+  }
+}
