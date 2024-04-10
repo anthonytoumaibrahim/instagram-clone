@@ -62,13 +62,7 @@ class FollowController extends Controller
 
         $posts = Post::whereIn('user_id', $following)
             ->orderBy('created_at', 'DESC')
-            ->with('images', 'user:id,username,avatar')
-            ->withCount(['likedByUsers', 'comments'])->get();
-
-        $posts->each(function ($post) {
-            $like = PostLike::where("post_id", $post->id)->where("user_id", Auth::id())->first();
-            $post->liked_by_user = $like ? true : false;
-        });
+            ->get();
 
         return response()->json([
             'posts' => $posts

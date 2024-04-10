@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
@@ -13,6 +14,12 @@ class Post extends Model
         'caption',
         'user_id'
     ];
+
+    protected $appends = ['liked_by_user'];
+
+    protected $with = ['images', 'user:id,username,avatar'];
+
+    protected $withCount = ['likedByUsers', 'comments'];
 
     public function user()
     {
@@ -32,5 +39,11 @@ class Post extends Model
     public function likedByUsers()
     {
         return $this->belongsToMany(User::class, 'post_likes', 'post_id', 'user_id');
+    }
+
+    public function getLikedByUserAttribute()
+    {
+        $like = PostLike::where("post_id", $this->id)->where("user_id", Auth::id())->first();
+        return $like ? true : false;
     }
 }

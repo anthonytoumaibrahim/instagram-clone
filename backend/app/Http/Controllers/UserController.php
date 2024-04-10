@@ -25,11 +25,7 @@ class UserController extends Controller
 
         $user->is_following = Auth::user()->following->contains('id', $user->id);
 
-        $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'DESC')->with('images', 'user:id,username,avatar')->withCount(['likedByUsers', 'comments'])->get();
-        $posts->each(function ($post) {
-            $like = PostLike::where("post_id", $post->id)->where("user_id", Auth::id())->first();
-            $post->liked_by_user = $like ? true : false;
-        });
+        $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get();
 
         return response()->json([
             'profile' => $user,
