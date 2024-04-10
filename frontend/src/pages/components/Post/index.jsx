@@ -64,7 +64,7 @@ const Post = ({ post, images, fullForm = false }) => {
           />
 
           <div className="post-footer">
-            <p className="post-likes cursor-pointer" onClick={likePost}>
+            <div className="post-likes cursor-pointer" onClick={likePost}>
               {isLoading ? (
                 <Loader width={24} />
               ) : post.liked_by_user ? (
@@ -73,7 +73,7 @@ const Post = ({ post, images, fullForm = false }) => {
                 <FaRegHeart size={24} />
               )}
               {post.liked_by_users_count} likes
-            </p>
+            </div>
             <div className="post-caption">
               <Link className="username" to={`/profile/${post.user.username}`}>
                 {post.user.username}

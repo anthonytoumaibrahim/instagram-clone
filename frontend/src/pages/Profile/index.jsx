@@ -13,6 +13,7 @@ import AvatarUploader from "./components/AvatarUploader";
 import UserPosts from "../components/UserPosts";
 import Avatar from "../../components/Avatar";
 import FollowButton from "../components/FollowButton";
+import Modal from "../../components/Modal";
 
 // Icons
 import { IoMdGrid } from "react-icons/io";
@@ -25,6 +26,7 @@ const Profile = () => {
 
   const [profile, setProfile] = useState({});
   const [posts, setPosts] = useState([]);
+  const [followersModal, showFollowersModal] = useState(false);
   const sendRequest = useRequest();
   const navigate = useNavigate();
   const { username } = useParams();
@@ -55,6 +57,19 @@ const Profile = () => {
 
   return (
     <>
+      {/* {followersModal && (
+        <Modal width={340} handleClose={() => showFollowersModal(false)}>
+          {profile.followers.map((follower) => {
+            const { id, username, avatar } = follower;
+
+            return (
+              <div className="follower-wrapper" key={id}>
+                <Avatar username={username} avatar_url={avatar} />
+              </div>
+            );
+          })}
+        </Modal>
+      )} */}
       <section className="profile-info">
         <div className="avatar-uploader">
           {isOwner ? (
@@ -95,10 +110,13 @@ const Profile = () => {
             <div>
               <strong>{profile.posts_count}</strong> <span>posts</span>
             </div>
-            <div>
+            <div
+              onClick={() => showFollowersModal(true)}
+              className="modal-link"
+            >
               <strong>{profile.followers_count}</strong> <span>followers</span>
             </div>
-            <div>
+            <div className="modal-link">
               <strong>{profile.following_count}</strong> <span>following</span>
             </div>
           </div>

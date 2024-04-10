@@ -29,6 +29,12 @@
   display: flex;
   gap: 20px;
 }
+.profile-info .info-wrapper .followers .modal-link {
+  cursor: pointer;
+}
+.profile-info .info-wrapper .followers .modal-link:active {
+  opacity: 0.5;
+}
 
 .profile-info .bio {
   display: flex;

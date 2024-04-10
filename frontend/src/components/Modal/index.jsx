@@ -15,7 +15,7 @@ const Modal = forwardRef((props, ref) => {
         onClick={props.handleClose}
       />
       <div className="overlay" onClick={props.handleClose}></div>
-      <div className="body">
+      <div className="body" style={{ width: props.width ?? null }}>
         {props.title && <div className="title">{props.title}</div>}
         <div
           className="content"

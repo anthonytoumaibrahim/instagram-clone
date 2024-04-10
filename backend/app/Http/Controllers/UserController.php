@@ -14,7 +14,7 @@ class UserController extends Controller
     public function getProfile($username = null)
     {
         $username = $username ?? Auth::user()->username;
-        $user = User::where('username', $username)->select('id', 'full_name', 'username', 'avatar', 'bio', 'website')->withCount(['followers', 'following', 'posts'])->first();
+        $user = User::where('username', $username)->select('id', 'full_name', 'username', 'avatar', 'bio', 'website')->withCount(['followers', 'following', 'posts'])->with(['followers:id,username,avatar', 'following:id,username,avatar'])->first();
 
         $user->is_following = Auth::user()->following->find($user->id) ? true : false;
 
