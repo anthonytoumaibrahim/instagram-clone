@@ -35,8 +35,7 @@ Route::middleware(['api', 'auth:api'])->group(function () {
     Route::controller(FollowController::class)->group(function () {
         Route::get('/feed', 'getFeed');
         Route::get('/recommended', 'getRecommendedUsers');
-        Route::get('/followers/{id?}', 'getFollowers');
-        Route::get('/following', 'getFollowing');
+        Route::get('/followers/{id?}/{type?}', 'getFollowers');
         Route::post('/follow', 'follow');
     });
 });

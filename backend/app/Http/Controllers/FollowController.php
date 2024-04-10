@@ -10,28 +10,30 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowController extends Controller
 {
-    public function getFollowers($id = null)
+    public function getFollowers($id = null, $type = "followers")
     {
-        $user = User::with(['followers:id,username,avatar', 'following:id'])->findOrFail($id ? $id : Auth::id());
+        $user = User::with(['followers:id,username,avatar', 'following:id,username,avatar'])->findOrFail($id ? $id : Auth::id());
 
-        $followers = $user->followers->reject(function ($follower) {
-            return $follower->id === Auth::id();
-        })->map(function ($follower) {
-            $follower->is_following_back = Auth::user()->following->contains('id', $follower->id);
-            return $follower;
-        });
+        if ($type === "followers") {
+            $followers = $user->followers->reject(function ($follower) {
+                return $follower->id === Auth::id();
+            })->map(function ($follower) {
+                $follower->is_following = Auth::user()->following->contains('id', $follower->id);
+                return $follower;
+            });
+        } else {
+            $followers = $user->following->reject(function ($following) {
+                return $following->id === Auth::id();
+            })->map(function ($following) {
+                $following->is_following = Auth::user()->following->contains('id', $following->id);
+                return $following;
+            });
+        }
+
+
 
         return response()->json([
             'followers' => $followers
-        ]);
-    }
-
-    public function getFollowing()
-    {
-        $user = User::with(['following:id,username,avatar'])->find(Auth::id());
-
-        return response()->json([
-            'following' => $user->following
         ]);
     }
 

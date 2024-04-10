@@ -30,6 +30,7 @@ const Profile = () => {
   const [profile, setProfile] = useState({});
   const [posts, setPosts] = useState([]);
   const [followersModal, showFollowersModal] = useState(false);
+  const [followingModal, showFollowingModal] = useState(false);
 
   const isOwner = usernameSelector === username || !username;
 
@@ -61,6 +62,13 @@ const Profile = () => {
         <FollowersModal
           id={profile.id}
           handleClose={() => showFollowersModal(false)}
+        />
+      )}
+      {followingModal && (
+        <FollowersModal
+          type="following"
+          id={profile.id}
+          handleClose={() => showFollowingModal(false)}
         />
       )}
       <section className="profile-info">
@@ -109,7 +117,10 @@ const Profile = () => {
             >
               <strong>{profile.followers_count}</strong> <span>followers</span>
             </div>
-            <div className="modal-link">
+            <div
+              onClick={() => showFollowingModal(true)}
+              className="modal-link"
+            >
               <strong>{profile.following_count}</strong> <span>following</span>
             </div>
           </div>
