@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useRequest } from "../../../core/hooks/useRequest";
+import { toast } from "react-toastify";
 
 // Logo
 import Logo from "../../../components/Logo";
@@ -25,10 +27,12 @@ import "./styles.css";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
+  const sendRequest = useRequest();
   const [postModal, showPostModal] = useState(false);
   const location = useLocation();
 
   const logout = () => {
+    sendRequest("GET", "/auth/logout").catch((error) => console.log(error));
     dispatch({
       type: "userSlice/removeUser",
     });

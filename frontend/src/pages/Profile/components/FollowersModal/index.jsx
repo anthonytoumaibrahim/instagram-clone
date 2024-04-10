@@ -30,15 +30,16 @@ const FollowersModal = ({ id = null, type = "followers", handleClose }) => {
   };
 
   const handleFollow = (id) => {
-    const newFollowers = followers.map((follower) =>
-      follower.id === id
-        ? {
-            ...follower,
-            is_following: !follower.is_following,
-          }
-        : follower
+    setFollowers((fol) =>
+      fol.map((follower) =>
+        follower.id === id
+          ? {
+              ...follower,
+              is_following: !follower.is_following,
+            }
+          : follower
+      )
     );
-    setFollowers(newFollowers);
   };
 
   useEffect(() => {
