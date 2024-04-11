@@ -95,7 +95,15 @@ class FollowController extends Controller
         // doesn't already follow anyone
         if ($recommendedUsers->count() === 0) {
             return response()->json([
-                'recommended' => User::whereNot('id', Auth::id())->whereNotIn('id', $followingIds)->limit(5)->get()
+                'recommended' => User::select('id', 'username', 'avatar')
+                    ->withCount('followers')
+                    ->whereNot('id', Auth::id())
+                    ->whereNotIn('id', $followingIds)
+                    ->orderBy('followers_count', 'DESC')
+                    ->orderBy('avatar', 'DESC')
+                    ->limit(5)
+                    ->get()
+                    ->makeHidden('followers_count')
             ]);
         }
 
