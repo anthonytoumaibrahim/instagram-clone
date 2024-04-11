@@ -16,13 +16,11 @@ const CreatePost = ({ handleClose = () => {} }) => {
   const dispatch = useDispatch();
   const sendRequest = useRequest();
   const [stage, setStage] = useState("upload");
-  const inputRef = useRef(null);
-  const btnRef = useRef(null);
-
   const [files, setFiles] = useState([]);
   const [previewData, setPreviewData] = useState(null);
-
   const [caption, setCaption] = useState("");
+  const inputRef = useRef(null);
+  const btnRef = useRef(null);
 
   const submitPost = () => {
     btnRef.current.disabled = true;

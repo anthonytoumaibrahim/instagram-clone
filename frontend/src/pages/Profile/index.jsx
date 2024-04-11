@@ -46,7 +46,6 @@ const Profile = () => {
         });
       })
       .catch((error) => {
-        // Profile not found
         toast.error("Profile not found.");
         navigate("/");
       });

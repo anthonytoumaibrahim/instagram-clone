@@ -96,7 +96,7 @@ const Authentication = () => {
       })
       .catch((error) => {
         btnRef.current.disabled = false;
-        const { message } = error.response.data;
+        const { message } = error?.response?.data || {};
         if (message) {
           return setError(message);
         }

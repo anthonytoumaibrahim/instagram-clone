@@ -1,5 +1,6 @@
 .recommended-users {
-  width: 30%;
+  width: 100%;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -16,9 +17,15 @@
   gap: 20px;
 }
 
+@media (max-width: 1024px) {
+  .recommended-users {
+    width: auto;
+  }
+}
+
 @media (max-width: 768px) {
   .recommended-users {
     position: static;
-    width: 100%;
+    max-width: 100%;
   }
 }
