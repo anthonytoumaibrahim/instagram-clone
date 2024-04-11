@@ -81,7 +81,7 @@ class PostController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'caption' => 'required|max:1200',
+            'caption' => 'required|max:150',
             'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048'
         ]);
 

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('caption')->nullable();
+            $table->string('caption', 150)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

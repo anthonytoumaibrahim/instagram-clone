@@ -25,7 +25,7 @@ class UserFactory extends Factory
     {
         return [
             'full_name' => fake('en_US')->name(),
-            'username' => fake('en_US')->userName(),
+            'username' => Str::substr(fake('en_US')->userName(), 0, 20),
             'email' => fake('en_US')->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password123'),
             'phone' => fake('en_US')->phoneNumber(),
