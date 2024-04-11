@@ -22,13 +22,13 @@ import { FcRemoveImage } from "react-icons/fc";
 
 const Profile = () => {
   const usernameSelector = useSelector((state) => state.userSlice.username);
+  const postsSelector = useSelector((state) => state.postsSlice);
   const dispatch = useDispatch();
   const sendRequest = useRequest();
   const navigate = useNavigate();
   const { username } = useParams();
 
   const [profile, setProfile] = useState({});
-  const [posts, setPosts] = useState([]);
   const [followersModal, showFollowersModal] = useState(false);
   const [followingModal, showFollowingModal] = useState(false);
 
@@ -39,7 +39,6 @@ const Profile = () => {
       .then((response) => {
         const { profile, posts } = response.data;
         setProfile(profile);
-        setPosts(posts);
         dispatch({
           type: "postsSlice/setPosts",
           payload: posts,
@@ -150,7 +149,7 @@ const Profile = () => {
           <TbUserSquare /> Tagged
         </button>
       </div>
-      {posts.length > 0 ? (
+      {postsSelector.length > 0 ? (
         <UserPosts />
       ) : (
         <div className="no-posts-yet">
