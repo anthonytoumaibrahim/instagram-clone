@@ -1,7 +1,7 @@
 # Instagram Clone
 
 This is a clone of Instagram made with React, and uses Laravel as the backend API. It has the following features:
-- Users can login/signup (using JWT for authorization).
+- Users can login/signup (using JWT for authentication).
 - Users can edit their profiles.
 - Users can follow others.
 - Users can create posts with captions.
